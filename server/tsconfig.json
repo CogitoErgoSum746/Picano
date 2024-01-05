@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+      "resolveJsonModule": true,
+      "types": ["node", "express", "./src/custom.d.ts"],
+      "target": "ES6",
+      "module": "CommonJS",
+      "moduleResolution": "Node",
+      "outDir": "./dist",
+      "rootDir": "./src",
+      "strict": true,
+      "esModuleInterop": true,
+      "lib": ["dom", "es6"]
+    },
+    "include": ["src/**/*.ts", "src/index.ts"],
+    "exclude": ["node_modules"]
+}
