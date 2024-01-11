@@ -1,0 +1,9 @@
+<!-- TODO: delete. Use router when multiple pages are required. -->
+<router-outlet></router-outlet>
+
+<h1>Annotator</h1>
+
+<label for="brochure">Upload a file</label>
+<input id="brochure" type="file" (change)="showImage($event)" />
+
+<img *ngIf="brochureURL" src="{{brochureURL}}" alt="brochure-image">
