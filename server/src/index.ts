@@ -5,6 +5,7 @@ import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 
 import db1 from "./routes/fetch_haukka"
+import api from "./routes/vision-api"
 
 const PORT = 8000;
 
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/db1", db1)
+app.use("/api", api)
 
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
     res.send('indexxx');
