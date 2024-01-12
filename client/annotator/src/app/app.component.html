@@ -44,12 +44,15 @@
 
   <!-- Right Section -->
   <div class="product-preview">
-    <span>Preview Image of Product</span>
-    <div class="cropped-image-container">
-      <img [src]="croppedImage" />
-    </div>
+
+    <!-- Each product and its details can be independantly cropped and updated. -->
+    <app-product-extractor *ngIf="currentProductId" 
+        [product]="getCurrentProduct()" 
+        [currentCrop]="croppedImage"
+        (updateProduct)="setProductDetails($event)"
+    ></app-product-extractor>
   </div>
 </div>
 
-<!-- Each product can be independantly cropped and updated. -->
-<app-product-extractor></app-product-extractor>
+<!-- Table with extracted data of all products -->
+<h2 *ngIf="products.length > 0">A table is rendered here with data of all products. Data can be submitted to an API.</h2>

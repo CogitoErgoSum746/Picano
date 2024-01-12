@@ -17,8 +17,3 @@
     align-items: center;
     gap: 20px;
 }
-
-.cropped-image-container {
-    width: 40vw;
-    height: 20vh;
-}
