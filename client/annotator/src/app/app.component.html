@@ -1,17 +1,17 @@
-<!-- TODO: delete. Use router when multiple pages are required. -->
-<router-outlet></router-outlet>
-
 <h1>Annotator</h1>
 
 <label for="brochure">Upload a file</label>
 <input id="brochure" type="file" (change)="showImage($event)" />
 
 <image-cropper
-    [imageFile]="brochureFile"
-    [maintainAspectRatio]="true"
-    [aspectRatio]="4 / 3"
-    format="png"
-    (imageCropped)="imageCropped($event)"
+  [imageFile]="brochureFile"
+  [maintainAspectRatio]="false"
+  format="png"
+  (imageCropped)="imageCropped($event)"
 ></image-cropper>
 
-<!-- <img [src]="croppedImage" /> -->
+<div class="cropped-image-container">
+    <img [src]="croppedImage" />
+</div>
+
+<router-outlet></router-outlet>

@@ -12,6 +12,7 @@ import { ImageCropperModule, ImageCroppedEvent } from 'ngx-image-cropper';
 })
 export class AppComponent {
     brochureFile: File | undefined;
+    croppedImage: string | null | undefined = '';
 
     // handleImageUpload method injects the image into dom on upload.
     showImage(event: any) {
@@ -21,5 +22,6 @@ export class AppComponent {
 
     imageCropped(event: ImageCroppedEvent) {
         console.log("cropped");
+        this.croppedImage = event.objectUrl;
     }
 }
