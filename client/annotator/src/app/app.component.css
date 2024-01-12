@@ -1,7 +1,10 @@
-image-cropper {
-    width: 70vw;
+.workspace {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
 }
 
 .cropped-image-container {
-    width: 50vw;
+    width: 40vw;
+    height: 20vh;
 }

@@ -1,17 +1,42 @@
 <h1>Annotator</h1>
 
-<label for="brochure">Upload a file</label>
-<input id="brochure" type="file" (change)="showImage($event)" />
+<form *ngIf="brochureFile" (submit)="addProduct($event)">
+  <input name="productId" type="text" />
+  <button type="submit">Add Product</button>
+</form>
 
-<image-cropper
-  [imageFile]="brochureFile"
-  [maintainAspectRatio]="false"
-  format="png"
-  (imageCropped)="imageCropped($event)"
-></image-cropper>
-
-<div class="cropped-image-container">
-    <img [src]="croppedImage" />
+<!-- Provide file input if file is not already uploaded. -->
+<div *ngIf="!brochureFile">
+  <label for="brochure">Upload a Brochure to work with</label>
+  <input
+    id="brochure"
+    type="file"
+    accept="image/*"
+    (change)="showImage($event)"
+  />
 </div>
 
-<router-outlet></router-outlet>
+<!-- Helper text to navigate the tool. -->
+<h4>{{helperText}}</h4>
+
+<!-- Tool Work Area is mounted if file is uploaded. -->
+<div class="workspace" *ngIf="brochureFile">
+  <!-- Left Section -->
+  <image-cropper
+    [imageFile]="brochureFile"
+    [maintainAspectRatio]="false"
+    format="png"
+    (imageCropped)="imageCropped($event)"
+  ></image-cropper>
+
+  <!-- Right Section -->
+  <div class="product-preview">
+    <span>Preview Image of Product</span>
+    <div class="cropped-image-container">
+      <img [src]="croppedImage" />
+    </div>
+  </div>
+</div>
+
+<!-- Each product can be independantly cropped and updated. -->
+<app-product-extractor></app-product-extractor>
