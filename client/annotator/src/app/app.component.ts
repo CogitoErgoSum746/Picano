@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { ImageCropperModule, ImageCroppedEvent } from 'ngx-image-cropper';
 import { ProductExtractorComponent } from './product-extractor/product-extractor.component';
-import { Product } from '../types';
+import { Product } from './app.services';
 
 @Component({
   selector: 'app-root',
@@ -21,11 +21,9 @@ export class AppComponent {
     // current cropped image url.
     croppedImage: string | null | undefined = '';
 
-    // A HashMap to store product data.
-    // 
-    // productID(string) => productDetails(object).
-    products: Map<string, Product> = new Map();
-    currentProductId: string = '';
+    // products contain product objects.
+    products: Array<Product> = [];
+    currentProductId: string | undefined;
 
     // handleImageUpload method injects the image into dom on upload.
     showImage(event: any) {
@@ -53,16 +51,17 @@ export class AppComponent {
 
         // If productId already exists in products,
         // notify the user to select from the drop-down.
-        if (this.products.has(productId)) {
+        if (this.products.some(product => product.id === productId)) {
             this.helperText = "Product already exists. Select from the drop-down."
             return;
         }
 
-        // add to products.
-        this.products.set(productId, <Product>{});
+        // create new product.
+        const newProduct = new Product(productId);
+        this.products.push(newProduct);
 
         // Make new product the current working product.
-        this.currentProductId = productId;
+        this.currentProductId = newProduct.id;
 
         // Clear form.
         event.target.reset();
@@ -72,5 +71,9 @@ export class AppComponent {
     changeCurrentProduct(event: any) {
         this.helperText = '';
         this.currentProductId = event.target.value;
+    }
+
+    isCurrentProduct(id: string) {
+        return id === this.currentProductId;
     }
 }

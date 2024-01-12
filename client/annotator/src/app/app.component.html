@@ -8,10 +8,10 @@
       <button type="submit">Add Product</button>
     </form>
 
-    <div *ngIf="products.size > 0">
+    <div *ngIf="products.length > 0">
       <label for="products">Choose a product: </label>
-      <select id="products" [value]="currentProductId" (change)="changeCurrentProduct($event)">
-        <option *ngFor="let product of products.keys()" [value]="product">{{ product }}</option>
+      <select id="products" (change)="changeCurrentProduct($event)">
+        <option *ngFor="let product of products" [selected]="isCurrentProduct(product.id)" value="{{product.id}}">{{ product.id }}</option>
       </select>
     </div>
   </div>
