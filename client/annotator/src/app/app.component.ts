@@ -25,11 +25,13 @@ export class AppComponent {
     // 
     // productID(string) => productDetails(object).
     products: Map<string, Product> = new Map();
+    currentProductId: string = '';
 
     // handleImageUpload method injects the image into dom on upload.
     showImage(event: any) {
         const [file] = event.target.files;
         this.brochureFile = file;
+        this.helperText = "Add a product to get started."
     }
 
     // imageCropped updates the product image.
@@ -38,7 +40,7 @@ export class AppComponent {
     }
 
     // addProduct adds a new product to products.
-    addProduct(event: SubmitEvent) {
+    addProduct(event: any) {
         event.preventDefault();
         const formData = new FormData(<HTMLFormElement>event.target);
         const productId = formData.get('productId')?.toString();
@@ -58,5 +60,17 @@ export class AppComponent {
 
         // add to products.
         this.products.set(productId, <Product>{});
+
+        // Make new product the current working product.
+        this.currentProductId = productId;
+
+        // Clear form.
+        event.target.reset();
+        this.helperText = '';
+    }
+
+    changeCurrentProduct(event: any) {
+        this.helperText = '';
+        this.currentProductId = event.target.value;
     }
 }
