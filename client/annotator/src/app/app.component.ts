@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { ImageCropperModule, ImageCroppedEvent } from 'ngx-image-cropper';
-import { ProductExtractorComponent } from './product-extractor/product-extractor.component';
+import { ProductDetailsUpdator } from './product-extractor/product-extractor.component';
 import { Product } from './app.services';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, ImageCropperModule, ProductExtractorComponent],
+  imports: [CommonModule, RouterOutlet, ImageCropperModule, ProductDetailsUpdator],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -19,7 +19,7 @@ export class AppComponent {
     brochureFile: File | undefined;
 
     // current cropped image url.
-    croppedImage: string | null | undefined = '';
+    croppedImage: string | undefined;
 
     // products contain product objects.
     products: Array<Product> = [];
@@ -34,7 +34,8 @@ export class AppComponent {
 
     // imageCropped updates the product image.
     imageCropped(event: ImageCroppedEvent) {
-        this.croppedImage = event.objectUrl;
+        if (event.objectUrl)
+            this.croppedImage = event.objectUrl;
     }
 
     // addProduct adds a new product to products.
@@ -75,5 +76,20 @@ export class AppComponent {
 
     isCurrentProduct(id: string) {
         return id === this.currentProductId;
+    }
+
+    getCurrentProduct(): Product {
+        const product = this.products.find(product => product.id === this.currentProductId);
+        if (!product) {
+            this.helperText = "Something failed while getting current product";
+            return <Product>{};
+        }
+
+        return product;
+    }
+
+    setProductDetails(newProduct: Product) {
+        const index = this.products.findIndex(product => product.id === newProduct.id);
+        this.products.splice(index, 1, newProduct);
     }
 }

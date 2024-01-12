@@ -2,6 +2,7 @@ export class Product {
     id: string;
     name: string;
     brand: string;
+    image: string;
     description: string;
     discoutedPrice: string;
     campaignQuantity: string;
@@ -11,6 +12,7 @@ export class Product {
         this.id = id;
         this.name = '';
         this.brand = '';
+        this.image = '';
         this.description = '';
         this.discoutedPrice = '';
         this.campaignQuantity = '';
