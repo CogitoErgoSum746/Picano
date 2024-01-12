@@ -1,9 +1,12 @@
-<h1>Annotator</h1>
+<div class="navbar">
+  <h1>Annotator</h1>
 
-<form *ngIf="brochureFile" (submit)="addProduct($event)">
-  <input name="productId" type="text" />
-  <button type="submit">Add Product</button>
-</form>
+  <!-- Form to add a product. -->
+  <form *ngIf="brochureFile" (submit)="addProduct($event)">
+    <input name="productId" type="text" />
+    <button type="submit">Add Product</button>
+  </form>
+</div>
 
 <!-- Provide file input if file is not already uploaded. -->
 <div *ngIf="!brochureFile">
@@ -17,7 +20,7 @@
 </div>
 
 <!-- Helper text to navigate the tool. -->
-<h4>{{helperText}}</h4>
+<h4>{{ helperText }}</h4>
 
 <!-- Tool Work Area is mounted if file is uploaded. -->
 <div class="workspace" *ngIf="brochureFile">

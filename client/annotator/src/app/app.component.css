@@ -4,6 +4,12 @@
     grid-template-rows: 1fr;
 }
 
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .cropped-image-container {
     width: 40vw;
     height: 20vh;
