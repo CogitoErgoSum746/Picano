@@ -1,0 +1,25 @@
+<div class="container">
+  <!-- Show preview of current crop -->
+  <div>
+    <span>Preview of annotated section</span>
+    <div class="cropped-image-container">
+      <img [src]="currentCrop" />
+    </div>
+  </div>
+
+  <!-- Display attributes of a product -->
+  <span> Annotate a section and click on confirm button to extract text. </span>
+
+  <!-- Button for each attribute to get OCR text. -->
+  <div class="product-attribute-container">
+    <ng-container *ngFor="let item of product | keyvalue">
+      <div class="product-attribute" *ngIf="PRODUCT_LABELS[item.key]">
+        <label [for]="item.key">{{ PRODUCT_LABELS[item.key] }}</label>
+        <button [id]="item.key" [name]="item.key" (click)="handleClick($event)">
+          Extract
+        </button>
+        <span>vision output: {{ item.value }}</span>
+      </div>
+    </ng-container>
+  </div>
+</div>
