@@ -1,0 +1,24 @@
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.cropped-image-container {
+    width: 40vw;
+    height: 20vh;
+}
+
+.product-attribute-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.product-attribute {
+    display: grid;
+    grid-template-columns: 0.7fr 0.5fr 2fr;
+    grid-auto-rows: 30px;
+    justify-items: center;
+}

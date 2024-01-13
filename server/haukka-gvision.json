@@ -1,0 +1,14 @@
+{
+    "type": "service_account",
+    "project_id": "haukka-gvision",
+    "private_key_id": "c463b99975161d74df0c172f26a6ccada2d54227",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEugIBADANBgkqhkiG9w0BAQEFAASCBKQwggSgAgEAAoIBAQCLg3kp6TQ1dAEG\nU4UOM+09jnjluW63H9LmUQde8l3fZwrntjcx1DQaQNECdnD1FktNfFVJVL8EvjNQ\nu9TQtXH9dqMiMF7HWij8A8F2kuCXSLs0cDmJljDwfoOcEdMKxpMp43MWCcukWXQx\nn/LLe28k1/dWH2DVIDLS9TO21rCE056UyEegu6n7lKAw0W+RFZX+00vrUFyBoh0u\nJl8pmekI2QYi8TCrgFjuKP3cRszEUDSIF2gnN0CM3selRf1b3bIb2UzzyrciWZA3\n4TdSHOp/rITnBX3+y/nqHsS6Eb21UeGzkmhmuMIzObX8qmznHwbvzBd9FBk/AxwB\nc2Vfiy7dAgMBAAECgf9PyszBll9bMxMNoIxjqHnyJZ9/w/lOmHpGv+aMpzyJSVCI\nte6w0Rf7lpaekfSI4vdZRIMtgwq9QQtDDCqWM9sThtxGnDjuS41P6ytQZduOAEsR\nnXNK/bDVMNvqUfIiIkXeRKLN4qGrSH5Bjk7kPPSUXfCtkRoQyxmbuMybBgRvSBZ6\nD2lLZ5KKR93Z/50Y3Zsk+XTOPAATUd9H+TXVw1znsCYMnAjYi77DKNE+xi7g+Fn7\nqbVFSmSvjYTkrem/OR9d3s/K/vUFLPokuBW1AZ1HgvYLOgdKvqrops0V7hdyJjS9\nhLR0GW9mbGgRYbBw9oDKErrHniVVJApoMkWCVZkCgYEAvyRDObfgPO08Y2V+JOtj\nBA3VwOuX6HufSfHv8qNDUYvUyv9l8BgVBOWiDKknEubjmUhJytFQHRBippme/QHd\n9sO0j/fbzvHN3EwT4/UgH0RMj5ooBho/A7h/+Wy3YCYSEE3KkIMxtaabhlwijGaz\nNlzgYT2r6JdC5hqznOj9wwkCgYEAutp6d8xUckCT2Ob0EA2esNARCWqf4Jz7fF2O\nltJxDhZ/jCv7AWs114BQ5Itn1B2OlvXCyi62CpzHiVE+JHgRJyczJHBlEmpNo1X3\nw2RnnWs8kbAyk/sYCG33Tk+3mMlBTQBFPl34BIleROowlqYJtVLS6MW4dO5aS2G+\nvgzg3jUCgYAmA6ZDEmjMdTovYn4GBbJ5me7LIY/issNpR267SPEYhMDbZpP1fjSf\n9rOV5QZaYgUd9RyH870FKr8T9zWBiB+G9kEw6NCUhc61Y4QJMDUlQsYfQT94hzvF\nF6qMBq0puCibiX0h5JW8VNhVjnlohvxZcXtGm6dW6M5rSSAzsrrVUQKBgGUcpPj+\n0ROibl8JWzj0pdL4RL/buvhI+q2p0uc6qYL+Gbc4dXOnGFOtVBjYdy8Jb4exJd9S\nt5+2hyN/mykQ7/dH9xzY1VjJvYmNk61gP9GnnfcYacY6Mh8dop319VvwTC3m35GI\nOBX8X87bC7/5yXcdgpQDqnVcJfB0zEr7nROhAoGAAeyLVAVD9uQE3LSdyBpJrLq6\nNsSvwmZlLJZiVV7yPeW1iXs93TzMocuHTIhNYClxcETNqZUNP29Pv9ZxBEQ7mi59\nwFwhbjwHJ2Mzgsxvm6PZMkgp1VRDp0ynzljeTtmP0Y6SLRMVlG5UEAtB/YTKb+U0\nzxf3yKfkzdSgT8yQAmc=\n-----END PRIVATE KEY-----\n",
+    "client_email": "api-service-account@haukka-gvision.iam.gserviceaccount.com",
+    "client_id": "104952104541777566756",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/api-service-account%40haukka-gvision.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+  }
+  
