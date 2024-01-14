@@ -15,7 +15,13 @@
         <button [id]="item.key" [name]="item.key" (click)="handleClick($event)">
           Extract
         </button>
-        <input [name]="item.key" [value]="item.value" />
+
+        <!-- User-editable prefilled text input. -->
+        <input
+          [name]="item.key"
+          [value]="item.value"
+          (change)="handleChange($event)"
+        />
       </div>
     </ng-container>
   </div>

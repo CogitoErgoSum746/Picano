@@ -44,8 +44,18 @@ export class ProductDetailsUpdator {
         });
 
         const responseObject = await response.json();
+        this.updateProductAttribute(productAttribute, responseObject.text);
+    }
 
-        this.product[productAttribute as keyof Product] = responseObject.text;
+    // Called when user manually edits an attribute.
+    handleChange(event: Event) {
+        const {name, value} = <HTMLInputElement>event.target;
+        this.updateProductAttribute(name, value);
+    }
+
+    // updateAttribute updates the parent's product state.
+    updateProductAttribute(attribute: string, value: string) {
+        this.product[attribute as keyof Product] = value;
         this.updateProduct.emit(this.product);
     }
 
