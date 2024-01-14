@@ -1,14 +1,11 @@
 <div class="container">
   <!-- Show preview of current crop -->
-  <div>
+  <div class="preview-section">
     <span>Preview of annotated section</span>
     <div class="cropped-image-container">
       <img [src]="imageUrl" />
     </div>
   </div>
-
-  <!-- Display attributes of a product -->
-  <span> Annotate a section and click on confirm button to extract text. </span>
 
   <!-- Button for each attribute to get OCR text. -->
   <div class="product-attribute-container">
@@ -18,7 +15,7 @@
         <button [id]="item.key" [name]="item.key" (click)="handleClick($event)">
           Extract
         </button>
-        <span>vision output: {{ item.value }}</span>
+        <input [name]="item.key" [value]="item.value" />
       </div>
     </ng-container>
   </div>

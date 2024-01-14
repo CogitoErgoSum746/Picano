@@ -9,17 +9,23 @@
     </form>
 
     <div *ngIf="products.length > 0">
-      <label for="products">Choose a product: </label>
+      <label for="products">Change product: </label>
       <select id="products" (change)="changeCurrentProduct($event)">
-        <option *ngFor="let product of products" [selected]="isCurrentProduct(product.id)" value="{{product.id}}">{{ product.id }}</option>
+        <option
+          *ngFor="let product of products"
+          [selected]="isCurrentProduct(product.id)"
+          value="{{ product.id }}"
+        >
+          {{ product.id }}
+        </option>
       </select>
     </div>
   </div>
 </div>
 
 <!-- Provide file input if file is not already uploaded. -->
-<div *ngIf="!brochureFile">
-  <label for="brochure">Upload a Brochure to work with</label>
+<div class="upload-container" *ngIf="!brochureFile">
+  <label for="brochure">Upload a Brochure to work with:</label>
   <input
     id="brochure"
     type="file"
@@ -29,8 +35,13 @@
 </div>
 
 <!-- Helper text to navigate the tool. -->
-<h4 *ngIf="!helperText && currentProductId">Working on Product: {{currentProductId}}</h4>
 <h4>{{ helperText }}</h4>
+
+<!-- Default text if no helperText is present. -->
+<h4 *ngIf="!helperText && currentProductId">
+  Working on Product: {{ currentProductId }}. Annotate a section 
+  and click on confirm button to extract text.
+</h4>
 
 <!-- Tool Work Area is mounted if file is uploaded. -->
 <div class="workspace" *ngIf="brochureFile">
@@ -44,15 +55,18 @@
 
   <!-- Right Section -->
   <div class="product-preview">
-
     <!-- Each product and its details can be independantly cropped and updated. -->
-    <app-product-extractor *ngIf="currentProductId" 
-        [product]="getCurrentProduct()" 
-        [imageUrl]="croppedImage"
-        (updateProduct)="setProductDetails($event)"
+    <app-product-extractor
+      *ngIf="currentProductId"
+      [product]="getCurrentProduct()"
+      [imageUrl]="croppedImage"
+      (updateProduct)="setProductDetails($event)"
     ></app-product-extractor>
   </div>
 </div>
 
 <!-- Table with extracted data of all products -->
-<h2 *ngIf="products.length > 0">A table is rendered here with data of all products. Data can be submitted to an API.</h2>
+<h2 *ngIf="products.length > 0">
+  A table is rendered here with data of all products. Data can be submitted to
+  an API.
+</h2>
