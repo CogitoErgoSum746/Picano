@@ -1,10 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
+
 /* You can add global styles to this file, and also import other style files */
 * {
     box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    background-color: #E4F9F5;
 }
 
 img {
     object-fit: contain;
     max-width: 100%;
     max-height: 100%;
+}
+
+button {
+    cursor: pointer;
 }
