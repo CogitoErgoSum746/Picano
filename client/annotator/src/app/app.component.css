@@ -2,12 +2,37 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
+    column-gap: 20px;
+    background-color: #E6FFFA;
+    border-radius: 5px;
+}
+
+h1 {
+    color: #2C3639;
+}
+
+h4 {
+    text-align: center;
 }
 
 .navbar {
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 10px;
+    background-color: #b1c7d2;
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.upload-container {
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    font-weight: 500;
+    font-size: 1.5rem;
 }
 
 .form-container {
@@ -16,4 +41,18 @@
     justify-content: center;
     align-items: center;
     gap: 20px;
+}
+
+.form-container > form {
+    display: flex;
+    gap: 10px;
+}
+
+/* Custom background overlay color. */
+image-cropper {
+    --cropper-overlay-color: black;
+}
+
+.product-preview {
+    padding: 10px;
 }
