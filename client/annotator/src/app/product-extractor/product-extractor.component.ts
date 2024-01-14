@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ProductDetailsUpdator {
     @Input({ required: true }) product!: Product;
-    @Input() currentCrop: string | undefined ;
+    @Input() imageUrl: string | undefined ;
 
     // Pass the updated product details to parent component
     // to update products array.
@@ -25,12 +25,28 @@ export class ProductDetailsUpdator {
         "restrictions": "Restrictions",
     };
 
-    handleClick(event: Event) {
-        const button = <HTMLButtonElement>event.target;
-        // API to google vision.
-        this.product[button.name as keyof Product] = button.name;
+    // handleClick fetches the text for current cropped
+    // image and assigns it to the relevant attribute of product.
+    async handleClick(event: Event) {
+        // Get product attribute.
+        const { name: productAttribute } = <HTMLButtonElement>event.target;
+
+        // Convert imageUrl to blob.
+        if (!this.imageUrl) return;
+
+        const image = await fetch(this.imageUrl).then(r => r.blob());
+        const formData = new FormData();
+        formData.append('image', image);
+
+        const response = await fetch('http://localhost:8000/api/vision', {
+            method: 'POST',
+            body: formData
+        });
+
+        const responseObject = await response.json();
+
+        this.product[productAttribute as keyof Product] = responseObject.text;
         this.updateProduct.emit(this.product);
-        console.log(this.product);
     }
 
 }

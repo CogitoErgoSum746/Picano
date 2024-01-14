@@ -48,7 +48,7 @@
     <!-- Each product and its details can be independantly cropped and updated. -->
     <app-product-extractor *ngIf="currentProductId" 
         [product]="getCurrentProduct()" 
-        [currentCrop]="croppedImage"
+        [imageUrl]="croppedImage"
         (updateProduct)="setProductDetails($event)"
     ></app-product-extractor>
   </div>
