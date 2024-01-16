@@ -1,0 +1,8 @@
+<!-- Generate a datalist for groups. -->
+<h3>Select store to which the current campaign belongs to:</h3>
+
+<label for="group-input">Group</label>
+<input id="group-input" list="groups" />
+<datalist id="groups">
+    <option *ngFor="let group of groups" [value]="group"></option>
+</datalist>
