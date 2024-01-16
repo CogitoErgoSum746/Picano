@@ -1,10 +1,10 @@
-import express, { Router, Request, Response, NextFunction } from 'express';
 import { executeQuery } from '../db_connections/haukka_db';
+import { Router, Request, Response, NextFunction } from 'express';
 
-const router: Router = express.Router();
+const router: Router = Router();
 
-// Route for getting group names
-router.get('/group_names', async (req: Request, res: Response, next: NextFunction) => {
+// Route for getting group names.
+router.get('/groups', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const query = "SELECT group_name FROM admin_group WHERE status = 'active'";
         const result = await executeQuery(query);
@@ -20,7 +20,7 @@ router.get('/group_names', async (req: Request, res: Response, next: NextFunctio
 });
 
 // Route for getting chain category names
-router.get('/chain_categories', async (req, res, next) => {
+router.get('/chain-categories', async (req, res) => {
     try {
         const query = "SELECT chain_cat_name FROM admin_chain_category WHERE status = 'active'";
         const result = await executeQuery(query);
@@ -36,7 +36,7 @@ router.get('/chain_categories', async (req, res, next) => {
 });
 
 // Route for getting chain names
-router.get('/chain_names', async (req, res, next) => {
+router.get('/chains', async (req, res) => {
     try {
         const query = "SELECT chain_name FROM admin_chain WHERE status = 'active'";
         const result = await executeQuery(query);
@@ -52,7 +52,7 @@ router.get('/chain_names', async (req, res, next) => {
 });
 
 // Route for getting store names
-router.get('/store_names', async (req, res, next) => {
+router.get('/stores', async (req, res) => {
     try {
         const query = "SELECT store_name_fi FROM admin_store WHERE status = 'active'";
         const result = await executeQuery(query);
@@ -68,7 +68,7 @@ router.get('/store_names', async (req, res, next) => {
 });
 
 // Route for getting product category names
-router.get('/product_category', async (req, res, next) => {
+router.get('/product-category', async (req, res, next) => {
     try {
         const query = "SELECT product_cat_name FROM product_category WHERE status = 'active'";
         const result = await executeQuery(query);
