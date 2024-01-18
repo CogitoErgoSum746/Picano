@@ -1,7 +1,7 @@
-import express, { Router, Request, Response, NextFunction } from 'express';
 import { executeQuery } from '../db_connections/haukka_db';
+import { Router, Request, Response, NextFunction } from 'express';
 
-const router: Router = express.Router();
+const router: Router = Router();
 
 const handleRoute = async (req: Request, res: Response, query: string, params?: any) => {
     try {
