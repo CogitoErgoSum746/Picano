@@ -1,7 +1,20 @@
 import { executeQuery } from '../db_connections/haukka_db';
+import { ParsedQs } from 'qs';
 import { Router, Request, Response, NextFunction } from 'express';
 
 const router: Router = Router();
+
+interface IdValuePair {
+    id: string;
+    value: string;
+}
+
+interface Output {
+    group: IdValuePair[];
+    chain_category: IdValuePair[];
+    chain: IdValuePair[];
+    store: IdValuePair[];
+}
 
 const handleRoute = async (req: Request, res: Response, query: string, params?: any) => {
     try {
@@ -14,36 +27,11 @@ const handleRoute = async (req: Request, res: Response, query: string, params?: 
     }
 };
 
-// Route for getting group names
-router.get('/group_names', async (req: Request, res: Response, next: NextFunction) => {
-    const query = "SELECT group_name FROM admin_group WHERE status = 'active'";
-    handleRoute(req, res, query);
-});
-
-// Route for getting chain category names
-router.get('/chain_categories', async (req, res, next) => {
-    const query = "SELECT chain_cat_name FROM admin_chain_category WHERE status = 'active'";
-    handleRoute(req, res, query);
-});
-
-// Route for getting chain names
-router.get('/chain_names', async (req, res, next) => {
-    const query = "SELECT chain_name FROM admin_chain WHERE status = 'active'";
-    handleRoute(req, res, query);
-});
-
-// Route for getting store names
-router.get('/store_names', async (req, res, next) => {
-    const query = "SELECT store_name_fi FROM admin_store WHERE status = 'active'";
-    handleRoute(req, res, query);
-});
-
 // Route for getting product category names
 router.get('/product_category', async (req, res, next) => {
     const query = "SELECT product_cat_name FROM product_category WHERE status = 'active'";
     handleRoute(req, res, query);
 });
-
 router.get('/group_from_chain_category/:chain_cat_name', async (req, res, next) => {
     try {
         const { chain_cat_name } = req.params;
@@ -72,7 +60,6 @@ router.get('/group_from_chain_category/:chain_cat_name', async (req, res, next) 
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-
 router.get('/group_from_chain_name/:chain_name', async (req, res, next) => {
     try {
         const { chain_name } = req.params;
@@ -100,7 +87,6 @@ router.get('/group_from_chain_name/:chain_name', async (req, res, next) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-
 router.get('/group_from_store_name/:store_name', async (req, res, next) => {
     try {
         const { store_name } = req.params;
@@ -128,7 +114,6 @@ router.get('/group_from_store_name/:store_name', async (req, res, next) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-
 router.get('/chain_category_from_chain_name/:chain_name', async (req, res, next) => {
     try {
         const { chain_name } = req.params;
@@ -156,8 +141,6 @@ router.get('/chain_category_from_chain_name/:chain_name', async (req, res, next)
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-
-
 router.get('/chain_category_from_store_name/:store_name', async (req, res, next) => {
     try {
         const { store_name } = req.params;
@@ -186,8 +169,6 @@ router.get('/chain_category_from_store_name/:store_name', async (req, res, next)
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-
-
 router.get('/chain_name_from_store_name/:store_name', async (req, res, next) => {
     try {
         const { store_name } = req.params;
@@ -210,6 +191,91 @@ router.get('/chain_name_from_store_name/:store_name', async (req, res, next) => 
 
         res.status(200).json({ chain_name });
         return;
+    } catch (error) {
+        console.error('Error executing SQL query:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+router.get('/auto-dropdown', async (req, res, next) => {
+    try {
+        // /auto-dropdown/?group[id]=_id&group[value]=_value
+
+        let output: Output = {
+            group: [],
+            chain_category: [],
+            chain: [],
+            store: []
+        }
+
+        let group_idValuePairs: IdValuePair[] = [
+
+        ];
+        let chaincategory_idValuePairs: IdValuePair[] = [
+
+        ];
+        let chain_idValuePairs: IdValuePair[] = [
+
+        ];
+        let store_idValuePairs: IdValuePair[] = [
+
+        ];
+
+        if (req.query.group && typeof req.query.group === 'object') {
+            const groupParams = req.query.group as ParsedQs;
+            const groupId = groupParams.id as string;
+            const groupValue = groupParams.value as string;
+
+            group_idValuePairs.push({ id: groupId, value: groupValue });
+
+            const params = [groupId];
+
+            const query1 = `SELECT ac.chain_cat_id, acc.chain_cat_name
+                            FROM admin_chain ac
+                            JOIN admin_chain_category acc ON ac.chain_cat_id = acc.chain_cat_id
+                            WHERE ac.group_id = ? AND ac.status = 'active' AND acc.status = 'active';`;
+
+
+            const results1 = await executeQuery(query1, params);
+
+            chaincategory_idValuePairs = results1.map((row: any) => ({
+                id: row.chain_cat_id,
+                value: row.chain_cat_name
+            }));
+
+            const query2 = "SELECT chain_id, chain_name FROM admin_chain WHERE group_id = ? AND status = 'active'";
+
+            const results2 = await executeQuery(query2, params);
+
+            chain_idValuePairs = results2.map((row: any) => ({
+                id: row.chain_id,
+                value: row.chain_name
+            }));
+
+            const query3 = "SELECT store_id, store_name_fi FROM admin_store WHERE group_id = ? AND status = 'active'";
+
+            const results3 = await executeQuery(query3, params);
+
+            store_idValuePairs = results3.map((row: any) => ({
+                id: row.store_id,
+                value: row.store_name_fi
+            }));
+        } else if (req.query.chain_category && typeof req.query.chain_category === 'object') {
+
+        } else if (req.query.chain && typeof req.query.chain === 'object') {
+
+        } else if (req.query.store && typeof req.query.store === 'object') {
+
+        }
+
+        output = {
+            group: group_idValuePairs,
+            chain_category: chaincategory_idValuePairs,
+            chain: chain_idValuePairs,
+            store: store_idValuePairs
+        }
+
+        res.status(200).send(output)
     } catch (error) {
         console.error('Error executing SQL query:', error);
         res.status(500).json({ error: 'Internal Server Error' });
