@@ -227,9 +227,54 @@ router.get('/auto-dropdown', async (req, res, next) => {
                 id: row.chain_cat_id,
                 value: row.chain_cat_name
             }));
+        } else {
+            const query1 = `SELECT group_id, group_name
+                            FROM admin_group
+                            WHERE status = 'active';`;
+
+            const results1 = await executeQuery(query1);
+
+            group_idValuePairs = results1.map((row: any) => ({
+                id: row.group_id,
+                value: row.group_name
+            }));
+
+            const query2 = `SELECT chain_cat_id, chain_cat_name
+                            FROM admin_chain_category
+                            WHERE status = 'active';`;
+
+            const results2 = await executeQuery(query2);
+
+            chaincategory_idValuePairs = results2.map((row: any) => ({
+                id: row.chain_cat_id,
+                value: row.chain_cat_name
+            }));
+
+            const query3 = `SELECT chain_id, chain_name
+                            FROM admin_chain
+                            WHERE status = 'active';`;
+
+            const results3 = await executeQuery(query3);
+
+            chain_idValuePairs = results3.map((row: any) => ({
+                id: row.chain_id,
+                value: row.chain_name
+            }));
+
+            const query4 = `SELECT store_id, store_name_fi
+                            FROM admin_store
+                            WHERE status = 'active';`;
+
+            const results4 = await executeQuery(query4);
+
+            store_idValuePairs = results4.map((row: any) => ({
+                id: row.store_id,
+                value: row.store_name_fi
+            }));
         }
 
         output = {
+            // use Set for unique elements
             group: Array.from(new Set(group_idValuePairs.map(pair => JSON.stringify(pair))))
             .map(str => JSON.parse(str)),
             chain_category: Array.from(new Set(chaincategory_idValuePairs.map(pair => JSON.stringify(pair))))
