@@ -32,170 +32,7 @@ router.get('/product_category', async (req, res, next) => {
     const query = "SELECT product_cat_name FROM product_category WHERE status = 'active'";
     handleRoute(req, res, query);
 });
-router.get('/group_from_chain_category/:chain_cat_name', async (req, res, next) => {
-    try {
-        const { chain_cat_name } = req.params;
 
-        const query = `
-  SELECT DISTINCT ag.group_name
-  FROM admin_chain_category acc
-  JOIN admin_chain ac ON acc.chain_cat_id = ac.chain_cat_id
-  JOIN admin_group ag ON ac.group_id = ag.group_id
-  WHERE acc.chain_cat_name = ? AND ac.status = 'active' AND ag.status = 'active'
-`;
-
-        const result = await executeQuery(query, [chain_cat_name]);
-
-        if (!result.length) {
-            res.status(404).json({ error: 'Group not found' });
-            return;
-        }
-
-        const group_name = result[0].group_name;
-
-        res.status(200).json({ group_name });
-        return;
-    } catch (error) {
-        console.error('Error executing SQL query:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-router.get('/group_from_chain_name/:chain_name', async (req, res, next) => {
-    try {
-        const { chain_name } = req.params;
-
-        const query = `
-            SELECT DISTINCT ag.group_name
-            FROM admin_chain ac
-            JOIN admin_group ag ON ac.group_id = ag.group_id
-            WHERE ac.status = 'active' AND ac.chain_name = ?
-        `;
-
-        const result = await executeQuery(query, [chain_name]);
-
-        if (!result.length) {
-            res.status(404).json({ error: 'Group not found' });
-            return;
-        }
-
-        const group_name = result[0].group_name;
-
-        res.status(200).json({ group_name });
-        return;
-    } catch (error) {
-        console.error('Error executing SQL query:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-router.get('/group_from_store_name/:store_name', async (req, res, next) => {
-    try {
-        const { store_name } = req.params;
-
-        const query = `
-            SELECT DISTINCT ag.group_name
-            FROM admin_store as ast
-            JOIN admin_group ag ON ast.group_id = ag.group_id
-            WHERE ast.status = 'active' AND ast.store_name_fi = ?
-        `;
-
-        const result = await executeQuery(query, [store_name]);
-
-        if (!result.length) {
-            res.status(404).json({ error: 'Group not found' });
-            return;
-        }
-
-        const group_name = result[0].group_name;
-
-        res.status(200).json({ group_name });
-        return;
-    } catch (error) {
-        console.error('Error executing SQL query:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-router.get('/chain_category_from_chain_name/:chain_name', async (req, res, next) => {
-    try {
-        const { chain_name } = req.params;
-
-        const query = `
-            SELECT DISTINCT acc.chain_cat_name
-            FROM admin_chain ac
-            JOIN admin_chain_category acc ON ac.chain_cat_id = acc.chain_cat_id
-            WHERE ac.status = 'active' AND ac.chain_name = ?
-        `;
-
-        const result = await executeQuery(query, [chain_name]);
-
-        if (!result.length) {
-            res.status(404).json({ error: 'Chain category not found' });
-            return;
-        }
-
-        const chain_cat_name = result[0].chain_cat_name;
-
-        res.status(200).json({ chain_cat_name });
-        return;
-    } catch (error) {
-        console.error('Error executing SQL query:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-router.get('/chain_category_from_store_name/:store_name', async (req, res, next) => {
-    try {
-        const { store_name } = req.params;
-
-        const query = `
-            SELECT DISTINCT acc.chain_cat_name
-            FROM admin_store ast
-            JOIN admin_chain ac ON ast.chain_id = ac.chain_id
-            JOIN admin_chain_category acc ON ac.chain_cat_id = acc.chain_cat_id
-            WHERE ast.status = 'active' AND ast.store_name_fi = ?
-        `;
-
-        const result = await executeQuery(query, [store_name]);
-
-        if (!result.length) {
-            res.status(404).json({ error: 'Chain category not found' });
-            return;
-        }
-
-        const chain_cat_name = result[0].chain_cat_name;
-
-        res.status(200).json({ chain_cat_name });
-        return;
-    } catch (error) {
-        console.error('Error executing SQL query:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-router.get('/chain_name_from_store_name/:store_name', async (req, res, next) => {
-    try {
-        const { store_name } = req.params;
-
-        const query = `
-            SELECT DISTINCT ac.chain_name
-            FROM admin_store ast
-            JOIN admin_chain ac ON ast.chain_id = ac.chain_id
-            WHERE ast.status = 'active' AND ast.store_name_fi = ?
-        `;
-
-        const result = await executeQuery(query, [store_name]);
-
-        if (!result.length) {
-            res.status(404).json({ error: 'Chain name not found' });
-            return;
-        }
-
-        const chain_name = result[0].chain_name;
-
-        res.status(200).json({ chain_name });
-        return;
-    } catch (error) {
-        console.error('Error executing SQL query:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
 
 router.get('/auto-dropdown', async (req, res, next) => {
     try {
@@ -222,9 +59,9 @@ router.get('/auto-dropdown', async (req, res, next) => {
         ];
 
         if (req.query.group && typeof req.query.group === 'object') {
-            const groupParams = req.query.group as ParsedQs;
-            const groupId = groupParams.id as string;
-            const groupValue = groupParams.value as string;
+            const Params = req.query.group as ParsedQs;
+            const groupId = Params.id as string;
+            const groupValue = Params.value as string;
 
             group_idValuePairs.push({ id: groupId, value: groupValue });
 
@@ -261,18 +98,146 @@ router.get('/auto-dropdown', async (req, res, next) => {
                 value: row.store_name_fi
             }));
         } else if (req.query.chain_category && typeof req.query.chain_category === 'object') {
+            const Params = req.query.chain_category as ParsedQs;
+            const chaincatId = Params.id as string;
+            const chaincatValue = Params.value as string;
 
+            chaincategory_idValuePairs.push({ id: chaincatId, value: chaincatValue });
+
+            const params = [chaincatId];
+
+            const query1 = `SELECT ac.group_id, ag.group_name
+                            FROM admin_chain ac
+                            JOIN admin_group ag ON ac.group_id = ag.group_id
+                            WHERE ac.chain_cat_id = ? AND ac.status = 'active' AND ag.status = 'active';`;
+
+
+            const results1 = await executeQuery(query1, params);
+
+            group_idValuePairs = results1.map((row: any) => ({
+                id: row.group_id,
+                value: row.group_name
+            }));
+
+            const query2 = "SELECT chain_id, chain_name FROM admin_chain WHERE chain_cat_id = ? AND status = 'active'";
+
+            const results2 = await executeQuery(query2, params);
+
+            chain_idValuePairs = results2.map((row: any) => ({
+                id: row.chain_id,
+                value: row.chain_name
+            }));
+
+            const query3 = `SELECT ast.store_id, ast.store_name_fi
+                            FROM admin_chain ac
+                            JOIN admin_store ast ON ac.chain_id = ast.chain_id
+                            WHERE ac.chain_cat_id = ? AND ac.status = 'active' AND ast.status = 'active';`;
+
+            const results3 = await executeQuery(query3, params);
+
+            store_idValuePairs = results3.map((row: any) => ({
+                id: row.store_id,
+                value: row.store_name_fi
+            }));
         } else if (req.query.chain && typeof req.query.chain === 'object') {
+            const Params = req.query.chain as ParsedQs;
+            const chainId = Params.id as string;
+            const chainValue = Params.value as string;
 
+            chain_idValuePairs.push({ id: chainId, value: chainValue });
+
+            const params = [chainId];
+
+            const query1 = `SELECT ac.group_id, ag.group_name
+                            FROM admin_chain ac
+                            JOIN admin_group ag ON ac.group_id = ag.group_id
+                            WHERE ac.chain_id = ? AND ac.status = 'active' AND ag.status = 'active';`;
+
+
+            const results1 = await executeQuery(query1, params);
+
+            group_idValuePairs = results1.map((row: any) => ({
+                id: row.group_id,
+                value: row.group_name
+            }));
+
+            const query2 = `SELECT ac.chain_cat_id, acc.chain_cat_name
+                            FROM admin_chain ac
+                            JOIN admin_chain_category acc ON acc.chain_cat_id = ac.chain_cat_id
+                            WHERE ac.chain_id = ? AND ac.status = 'active' AND acc.status = 'active';`;
+
+            const results2 = await executeQuery(query2, params);
+
+            chaincategory_idValuePairs = results2.map((row: any) => ({
+                id: row.chain_cat_id,
+                value: row.chain_cat_name
+            }));
+
+            const query3 = `SELECT store_id, store_name_fi FROM admin_store WHERE chain_id = ? AND status = 'active'`;
+
+            const results3 = await executeQuery(query3, params);
+
+            store_idValuePairs = results3.map((row: any) => ({
+                id: row.store_id,
+                value: row.store_name_fi
+            }));
         } else if (req.query.store && typeof req.query.store === 'object') {
+            const Params = req.query.store as ParsedQs;
+            const storeId = Params.id as string;
+            const storeValue = Params.value as string;
 
+            store_idValuePairs.push({ id: storeId, value: storeValue });
+
+            const params = [storeId];
+
+            const query1 = `SELECT ast.group_id, ag.group_name
+                            FROM admin_store ast
+                            JOIN admin_group ag ON ast.group_id = ag.group_id
+                            WHERE ast.store_id = ? AND ast.status = 'active' AND ag.status = 'active';`;
+
+
+            const results1 = await executeQuery(query1, params);
+
+            group_idValuePairs = results1.map((row: any) => ({
+                id: row.group_id,
+                value: row.group_name
+            }));
+
+            const query2 = `SELECT ast.chain_id, ac.chain_name
+                            FROM admin_store ast
+                            JOIN admin_chain ac ON ast.chain_id = ac.chain_id
+                            WHERE ast.store_id = ? AND ast.status = 'active' AND ac.status = 'active';`;
+
+            const results2 = await executeQuery(query2, params);
+
+            chain_idValuePairs = results2.map((row: any) => ({
+                id: row.chain_id,
+                value: row.chain_name
+            }));
+
+            const query3 = `SELECT ac.chain_cat_id, acc.chain_cat_name
+                            FROM admin_store ast
+                            JOIN admin_chain ac ON ast.chain_id = ac.chain_id
+                            JOIN admin_chain_category acc ON ac.chain_cat_id = acc.chain_cat_id
+                            WHERE ast.store_id = ? AND ast.status = 'active' AND ac.status = 'active' AND acc.status = 'active';`;
+
+            const results3 = await executeQuery(query3, params);
+
+            chaincategory_idValuePairs = results3.map((row: any) => ({
+                id: row.chain_cat_id,
+                value: row.chain_cat_name
+            }));
         }
 
         output = {
-            group: group_idValuePairs,
-            chain_category: chaincategory_idValuePairs,
-            chain: chain_idValuePairs,
-            store: store_idValuePairs
+            group: Array.from(new Set(group_idValuePairs.map(pair => JSON.stringify(pair))))
+            .map(str => JSON.parse(str)),
+            chain_category: Array.from(new Set(chaincategory_idValuePairs.map(pair => JSON.stringify(pair))))
+            .map(str => JSON.parse(str)),
+            chain: Array.from(new Set(chain_idValuePairs.map(pair => JSON.stringify(pair))))
+            .map(str => JSON.parse(str)),
+            store: Array.from(new Set(store_idValuePairs.map(pair => JSON.stringify(pair))))
+            .map(str => JSON.parse(str))
         }
 
         res.status(200).send(output)
