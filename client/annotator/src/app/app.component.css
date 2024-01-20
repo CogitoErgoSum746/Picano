@@ -56,3 +56,17 @@ image-cropper {
 .product-preview {
     padding: 10px;
 }
+
+table {
+    width: 90vw;
+    margin: 20px auto;
+    background-color: white;
+    border-radius: 20px;
+    text-align: center;
+    padding: 15px;
+}
+
+th {
+    background-color: #ffe1e1;
+    border-radius: 10px;
+}
