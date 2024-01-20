@@ -2,7 +2,6 @@ import express from "express";
 
 import api from "./routes/vision-api";
 import db1 from "./routes/fetch_haukka";
-import pdfTOimg from "./routes/pdf-to-image";
 
 // Instantiate express application.
 const app = express();
@@ -26,7 +25,6 @@ app.use(function(req, res, next) {
 // Mount API routes.
 app.use("/api", api);
 app.use("/api", db1);
-app.use("/api", pdfTOimg);
 
 app.listen(PORT, () => {
     console.log(`Started at http://localhost:${PORT}`);
