@@ -1,0 +1,10 @@
+.dropdowns {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.dropdowns > div {
+    display: flex;
+    column-gap: 10px;
+}
