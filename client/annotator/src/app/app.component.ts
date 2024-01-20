@@ -4,11 +4,12 @@ import { RouterOutlet } from '@angular/router';
 import { ImageCropperModule, ImageCroppedEvent } from 'ngx-image-cropper';
 import { ProductDetailsUpdator } from './product-extractor/product-extractor.component';
 import { Product } from './app.services';
+import { ChainSelectorComponent } from './chain-selector/chain-selector.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, ImageCropperModule, ProductDetailsUpdator],
+  imports: [CommonModule, RouterOutlet, ImageCropperModule, ProductDetailsUpdator, ChainSelectorComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

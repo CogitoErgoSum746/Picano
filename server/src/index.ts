@@ -1,6 +1,7 @@
-import db1 from "./routes/fetch_haukka"
-import api from "./routes/vision-api"
-import express, { Request, Response, NextFunction } from "express";
+import express from "express";
+
+import api from "./routes/vision-api";
+import db1 from "./routes/fetch_haukka";
 
 // Instantiate express application.
 const app = express();
@@ -13,7 +14,6 @@ config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/db1", db1);
 
 // WARN: Cors fix, remove in production.
 app.use(function(req, res, next) {
@@ -24,11 +24,7 @@ app.use(function(req, res, next) {
 
 // Mount API routes.
 app.use("/api", api);
-
-app.get('/', (req: Request, res: Response, next: NextFunction) => {
-    res.send('indexxx');
-});
-
+app.use("/api", db1);
 
 app.listen(PORT, () => {
     console.log(`Started at http://localhost:${PORT}`);
