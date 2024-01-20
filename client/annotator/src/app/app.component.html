@@ -39,8 +39,8 @@
 
 <!-- Default text if no helperText is present. -->
 <h4 *ngIf="!helperText && currentProductId">
-  Working on Product: {{ currentProductId }}. Annotate a section 
-  and click on confirm button to extract text.
+  Working on Product: {{ currentProductId }}. Annotate a section and click on
+  confirm button to extract text.
 </h4>
 
 <!-- Tool Work Area is mounted if file is uploaded. -->
@@ -69,7 +69,30 @@
 <app-chain-selector></app-chain-selector>
 
 <!-- Table with extracted data of all products -->
-<h2 *ngIf="products.length > 0">
-  A table is rendered here with data of all products. Data can be submitted to
-  an API.
-</h2>
+<h3 *ngIf="products.length > 0">Product Summary:</h3>
+<table *ngIf="products.length > 0" class="product-table">
+  <!-- Header row. -->
+  <tr>
+    <!-- Render ID column at the beginning. -->
+    <th>ID</th>
+    <ng-container *ngFor="let item of products[0] | keyvalue">
+      <th *ngIf="item.key !== 'id'">
+        {{ item.key.toUpperCase() }}
+      </th>
+    </ng-container>
+  </tr>
+
+  <!-- Data rows. -->
+  <tr *ngFor="let product of products">
+    <!-- Render IDs at the beginning. -->
+    <td>{{ product.id }}</td>
+    <ng-container *ngFor="let item of product | keyvalue">
+      <td *ngIf="item.key !== 'id'">
+        {{ item.value }}
+      </td>
+    </ng-container>
+  </tr>
+</table>
+
+<!-- Submit product data -->
+<button *ngIf="products.length > 0">Submit</button>
