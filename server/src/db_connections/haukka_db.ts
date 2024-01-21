@@ -22,3 +22,20 @@ export async function executeQuery(query: string, values?: any[]): Promise<any> 
         connection.end(); // Close the connection in a finally block to ensure it always happens
     }
 }
+
+export async function executeMultipleQueries(queries: Array<{ query: string, values?: any[] }>): Promise<any> {
+    const connection = await mysql.createConnection(dbConfig);
+
+    try {
+        const results = [];
+
+        for (const { query, values } of queries) {
+            const [rows] = await connection.execute(query, values);
+            results.push(rows);
+        }
+
+        return results;
+    } finally {
+        connection.end();
+    }
+}
