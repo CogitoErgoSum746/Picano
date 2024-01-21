@@ -4,7 +4,9 @@
     grid-template-rows: 1fr;
     column-gap: 20px;
     background-color: #E6FFFA;
-    border-radius: 5px;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
@@ -13,13 +15,15 @@ h1 {
 
 h4 {
     text-align: center;
+    margin-bottom: 20px;
+    color: #555;
 }
 
 .navbar {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 15px;
     border-radius: 10px;
-    background-color: #b1c7d2;
+    background-color: #4CAF50;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -28,15 +32,16 @@ h4 {
 .upload-container {
     height: 60vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 30px;
-    font-weight: 500;
+    gap: 20px;
+    font-weight: bold;
     font-size: 1.5rem;
 }
 
 .form-container {
-    padding: 5px;
+    padding: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -48,25 +53,34 @@ h4 {
     gap: 10px;
 }
 
-/* Custom background overlay color. */
 image-cropper {
-    --cropper-overlay-color: black;
+    --cropper-overlay-color: rgba(0, 0, 0, 0.5);
 }
 
 .product-preview {
-    padding: 10px;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 table {
-    width: 90vw;
+    width: 90%;
     margin: 20px auto;
     background-color: white;
     border-radius: 20px;
     text-align: center;
     padding: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 th {
-    background-color: #ffe1e1;
+    background-color: #4CAF50;
+    color: white;
     border-radius: 10px;
+    padding: 10px;
+}
+
+th, td {
+    padding: 10px;
 }
