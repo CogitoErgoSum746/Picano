@@ -1,5 +1,5 @@
 <div class="navbar">
-  <h1>Annotator</h1>
+  <h1>Product Annotation Tool</h1>
 
   <div *ngIf="brochureFile" class="form-container">
     <!-- Form to add a product. -->
@@ -25,7 +25,7 @@
 
 <!-- Provide file input if file is not already uploaded. -->
 <div class="upload-container" *ngIf="!brochureFile">
-  <label for="brochure">Upload a Brochure to work with:</label>
+  <label for="brochure">Upload a Brochure Image to work with:</label>
   <input
     id="brochure"
     type="file"
@@ -40,7 +40,7 @@
 <!-- Default text if no helperText is present. -->
 <h4 *ngIf="!helperText && currentProductId">
   Working on Product: {{ currentProductId }}. Annotate a section and click on
-  confirm button to extract text.
+  extract button to extract text.
 </h4>
 
 <!-- Tool Work Area is mounted if file is uploaded. -->
