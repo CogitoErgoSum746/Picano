@@ -7,8 +7,7 @@ import db1 from "./routes/fetch_haukka";
 
 // Instantiate express application.
 const app = express();
-const PORT: number = parseInt(process.env.PORT || '8000', 10);
-const IP_ADDRESS = process.env.IP_ADDRESS || '127.0.0.1';
+const PORT = process.env.PORT || '8000';
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -21,13 +20,9 @@ app.use(function(req, res, next) {
 });
 
 // Mount API routes.
-app.use("/api", api);
-app.use("/api", db1);
+app.use(api);
+app.use(db1);
 
-app.get('/something', (req, res) => {
-    res.send('hi');
-  });
-
-app.listen(PORT, IP_ADDRESS, () => {
-    console.log(`Started at http://${IP_ADDRESS}:${PORT}`);
+app.listen(PORT, () => {
+    console.log(`Server ready on port: ${PORT}`);
 });
