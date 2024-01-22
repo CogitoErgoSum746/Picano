@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { environment } from '../../environments/environment';
+import { API } from '../../config/API';
 
 type DataNode = {
     id: string;
@@ -21,8 +21,6 @@ export class ChainSelectorComponent {
     chainCategories: DataNode[] = [];
     disableInput: Boolean = false;
 
-    apiUrl = environment.apiUrl;
-
     ngOnInit() {
         this.loadData();
     }
@@ -33,13 +31,7 @@ export class ChainSelectorComponent {
         // and auto completed.
         this.disableInput = true;
 
-        let url = `${this.apiUrl}/api/auto-dropdown`;
-
-        // Update url with query params if filter is available.
-        if (field)
-            url = `${this.apiUrl}/api/auto-dropdown?${field}[id]=${id}&${field}[value]=${value}`;
-
-        const response = await fetch(url);
+        const response = await fetch(API.dropdownFilter(field, id, value));
         const data = await response.json();
         this.groups = data.group;
         this.chainCategories = data.chain_category;
