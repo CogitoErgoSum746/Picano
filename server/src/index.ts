@@ -7,7 +7,7 @@ import db1 from "./routes/fetch_haukka";
 
 // Instantiate express application.
 const app = express();
-const PORT: number = parseInt(process.env.PORT || '8000', 10); // Parse the port as a number.
+const PORT: number = parseInt(process.env.PORT || '8000', 10);
 const IP_ADDRESS = process.env.IP_ADDRESS || '127.0.0.1';
 
 app.use(express.json());
