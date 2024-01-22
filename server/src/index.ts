@@ -24,6 +24,10 @@ app.use(function(req, res, next) {
 app.use("/api", api);
 app.use("/api", db1);
 
+app.get('/something', (req, res) => {
+    res.send('hi');
+  });
+
 app.listen(PORT, IP_ADDRESS, () => {
     console.log(`Started at http://${IP_ADDRESS}:${PORT}`);
 });
