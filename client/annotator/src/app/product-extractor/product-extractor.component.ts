@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Product } from '../app.services';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-product-extractor',
@@ -25,6 +26,8 @@ export class ProductDetailsUpdator {
         "restrictions": "Restrictions",
     };
 
+    apiUrl = environment.apiUrl;
+
     // handleClick fetches the text for current cropped
     // image and assigns it to the relevant attribute of product.
     async handleClick(event: Event) {
@@ -38,7 +41,7 @@ export class ProductDetailsUpdator {
         const formData = new FormData();
         formData.append('image', image);
 
-        const response = await fetch('http://localhost:8000/api/vision', {
+        const response = await fetch(`${this.apiUrl}/api/vision`, {
             method: 'POST',
             body: formData
         });
