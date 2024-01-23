@@ -4,7 +4,7 @@ export class Product {
     brand: string;
     image: string;
     description: string;
-    discoutedPrice: string;
+    discountedPrice: string;
     campaignQuantity: string;
     restrictions: string;
 
@@ -14,7 +14,7 @@ export class Product {
         this.brand = '';
         this.image = '';
         this.description = '';
-        this.discoutedPrice = '';
+        this.discountedPrice = '';
         this.campaignQuantity = '';
         this.restrictions = '';
     }
