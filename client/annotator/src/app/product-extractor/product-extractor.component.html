@@ -12,20 +12,6 @@
       <!-- Product attributes are manually rendered
            since we need them in a particular order. -->
       <div class="product-attribute">
-        <label for="name">Product Name</label>
-        <button id="name" (click)="handleClick($event)">
-          Extract
-        </button>
-
-        <!-- User-editable prefilled text input. -->
-        <input
-          name="name"
-          [value]="product.name"
-          (change)="handleChange($event)"
-        />
-      </div>
-
-      <div class="product-attribute">
         <label for="brand">Brand Name</label>
         <button id="brand" (click)="handleClick($event)">
           Extract
@@ -35,6 +21,20 @@
         <input
           name="brand"
           [value]="product.brand"
+          (change)="handleChange($event)"
+        />
+      </div>
+
+      <div class="product-attribute">
+        <label for="name">Product Name</label>
+        <button id="name" (click)="handleClick($event)">
+          Extract
+        </button>
+
+        <!-- User-editable prefilled text input. -->
+        <input
+          name="name"
+          [value]="product.name"
           (change)="handleChange($event)"
         />
       </div>
@@ -52,6 +52,7 @@
           (change)="handleChange($event)"
         />
       </div>
+
       <div class="product-attribute">
         <label for="discountedPrice">Discounted Product Price</label>
         <button id="discountedPrice" (click)="handleClick($event)">
@@ -78,6 +79,7 @@
           (change)="handleChange($event)"
         />
       </div>
+
       <div class="product-attribute">
         <label for="restrictions">Restrictions</label>
         <button id="restrictions" (click)="handleClick($event)">
