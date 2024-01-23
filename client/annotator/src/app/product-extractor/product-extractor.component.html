@@ -9,20 +9,87 @@
 
   <!-- Button for each attribute to get OCR text. -->
   <div class="product-attribute-container">
-    <ng-container *ngFor="let item of product | keyvalue">
-      <div class="product-attribute" *ngIf="PRODUCT_LABELS[item.key]">
-        <label [for]="item.key">{{ PRODUCT_LABELS[item.key] }}</label>
-        <button [id]="item.key" [name]="item.key" (click)="handleClick($event)">
+      <!-- Product attributes are manually rendered
+           since we need them in a particular order. -->
+      <div class="product-attribute">
+        <label for="name">Product Name</label>
+        <button id="name" (click)="handleClick($event)">
           Extract
         </button>
 
         <!-- User-editable prefilled text input. -->
         <input
-          [name]="item.key"
-          [value]="item.value"
+          name="name"
+          [value]="product.name"
           (change)="handleChange($event)"
         />
       </div>
-    </ng-container>
+
+      <div class="product-attribute">
+        <label for="brand">Brand Name</label>
+        <button id="brand" (click)="handleClick($event)">
+          Extract
+        </button>
+
+        <!-- User-editable prefilled text input. -->
+        <input
+          name="brand"
+          [value]="product.brand"
+          (change)="handleChange($event)"
+        />
+      </div>
+
+      <div class="product-attribute">
+        <label for="description">Product Description</label>
+        <button id="description" (click)="handleClick($event)">
+          Extract
+        </button>
+
+        <!-- User-editable prefilled text input. -->
+        <input
+          name="description"
+          [value]="product.description"
+          (change)="handleChange($event)"
+        />
+      </div>
+      <div class="product-attribute">
+        <label for="discountedPrice">Discounted Product Price</label>
+        <button id="discountedPrice" (click)="handleClick($event)">
+          Extract
+        </button>
+
+        <!-- User-editable prefilled text input. -->
+        <input
+          name="discountedPrice"
+          [value]="product.discountedPrice"
+          (change)="handleChange($event)"
+        />
+      </div>
+      <div class="product-attribute">
+        <label for="campaignQuantity">Campaign Quantity</label>
+        <button id="campaignQuantity" (click)="handleClick($event)">
+          Extract
+        </button>
+
+        <!-- User-editable prefilled text input. -->
+        <input
+          name="campaignQuantity"
+          [value]="product.campaignQuantity"
+          (change)="handleChange($event)"
+        />
+      </div>
+      <div class="product-attribute">
+        <label for="restrictions">Restrictions</label>
+        <button id="restrictions" (click)="handleClick($event)">
+          Extract
+        </button>
+
+        <!-- User-editable prefilled text input. -->
+        <input
+          name="restrictions"
+          [value]="product.restrictions"
+          (change)="handleChange($event)"
+        />
+      </div>
   </div>
 </div>
