@@ -1,26 +1,5 @@
 <div class="navbar">
   <h1>Product Annotation Tool</h1>
-
-  <div *ngIf="brochureFile" class="form-container">
-    <!-- Form to add a product. -->
-    <form (submit)="addProduct($event)">
-      <input name="productId" type="text" />
-      <button type="submit">Add Product</button>
-    </form>
-
-    <div *ngIf="products.length > 0">
-      <label for="products">Change product: </label>
-      <select id="products" (change)="changeCurrentProduct($event)">
-        <option
-          *ngFor="let product of products"
-          [selected]="isCurrentProduct(product.id)"
-          value="{{ product.id }}"
-        >
-          {{ product.id }}
-        </option>
-      </select>
-    </div>
-  </div>
 </div>
 
 <!-- Provide file input if file is not already uploaded. -->
@@ -62,6 +41,27 @@
       [imageUrl]="croppedImage"
       (updateProduct)="setProductDetails($event)"
     ></app-product-extractor>
+  </div>
+</div>
+
+<!-- Form to add a product. -->
+<div *ngIf="brochureFile" class="form-container">
+  <form (submit)="addProduct($event)">
+    <input name="productId" type="text" />
+    <button type="submit">Add Product</button>
+  </form>
+
+  <div *ngIf="products.length > 0">
+    <label for="products">Change product: </label>
+    <select id="products" (change)="changeCurrentProduct($event)">
+      <option
+        *ngFor="let product of products"
+        [selected]="isCurrentProduct(product.id)"
+        value="{{ product.id }}"
+      >
+        {{ product.id }}
+      </option>
+    </select>
   </div>
 </div>
 
