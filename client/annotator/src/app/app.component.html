@@ -75,22 +75,23 @@
   <tr>
     <!-- Render ID column at the beginning. -->
     <th>ID</th>
-    <ng-container *ngFor="let item of products[0] | keyvalue">
-      <th *ngIf="item.key !== 'id'">
-        {{ item.key.toUpperCase() }}
-      </th>
-    </ng-container>
+    <th>Brand Name</th>
+    <th>Product Name</th>
+    <th>Description</th>
+    <th>Campaign Quantity</th>
+    <th>Restrictions</th>
+    <th>Product Category</th>
   </tr>
 
   <!-- Data rows. -->
   <tr *ngFor="let product of products">
-    <!-- Render IDs at the beginning. -->
     <td>{{ product.id }}</td>
-    <ng-container *ngFor="let item of product | keyvalue">
-      <td *ngIf="item.key !== 'id'">
-        {{ item.value }}
-      </td>
-    </ng-container>
+    <td>{{ product.brand }}</td>
+    <td>{{ product.name }}</td>
+    <td>{{ product.description }}</td>
+    <td>{{ product.campaignQuantity }}</td>
+    <td>{{ product.restrictions }}</td>
+    <td>{{ product.category }}</td>
   </tr>
 </table>
 
