@@ -93,5 +93,23 @@
           (change)="handleChange($event)"
         />
       </div>
+
+      <div class="product-attribute">
+        <label for="category">Product Category &#x25BC;</label>
+        <button id="category" (click)="handleClick($event)">
+          Extract
+        </button>
+
+        <!-- User-editable prefilled text input. -->
+        <input
+          name="category"
+          list="categories"
+          [value]="product.category"
+          (change)="handleChange($event)"
+        />
+        <datalist id="categories">
+            <option *ngFor="let category of categories" [value]="category"></option>
+        </datalist>
+      </div>
   </div>
 </div>

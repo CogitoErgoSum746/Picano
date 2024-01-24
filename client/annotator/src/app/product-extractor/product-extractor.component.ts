@@ -18,6 +18,15 @@ export class ProductDetailsUpdator {
     // to update products array.
     @Output() updateProduct: EventEmitter<Product> = new EventEmitter();
 
+    // Populate predefined product categories.
+    categories: string[] = [];
+
+    // Fetch and populate categories.
+    async ngOnInit() {
+        const response = await fetch(API.productCategories);
+        this.categories = await response.json();
+    }
+
     // handleClick fetches the text for current cropped
     // image and assigns it to the relevant attribute of product.
     async handleClick(event: Event) {
