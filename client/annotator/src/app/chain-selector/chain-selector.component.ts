@@ -25,6 +25,11 @@ export class ChainSelectorComponent {
         this.loadData();
     }
 
+    // Reset dropdowns to full data.
+    resetLists() {
+        this.loadData();
+    }
+
     // Fetches and assigns dataLists.
     async loadData(field = '', id = '', value = '') {
         // Disable user input until data is fetched
