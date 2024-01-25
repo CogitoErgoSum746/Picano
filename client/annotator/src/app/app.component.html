@@ -25,12 +25,21 @@
 <!-- Tool Work Area is mounted if file is uploaded. -->
 <div class="workspace" *ngIf="brochureURLs">
   <!-- Left Section -->
-  <image-cropper
-    [imageURL]="brochureURLs[0]"
-    [maintainAspectRatio]="false"
-    format="png"
-    (imageCropped)="imageCropped($event)"
-  ></image-cropper>
+  <div>
+    <label for="select-image">Select Page: </label>
+    <select id="select-image" (change)="changeCurrentBrochure($event)">
+      <option *ngFor="let brochure of brochureURLs; index as i" [value]="i">
+        Page {{ i + 1 }}
+      </option>
+    </select>
+
+    <image-cropper
+      [imageURL]="brochureURLs[currentBrochureIndex]"
+      [maintainAspectRatio]="false"
+      format="png"
+      (imageCropped)="imageCropped($event)"
+    ></image-cropper>
+  </div>
 
   <!-- Right Section -->
   <div class="product-preview">
