@@ -19,6 +19,7 @@ import { API } from '../config/API';
 export class AppComponent {
     helperText: string = '';
     brochureURLs: string[] | undefined;
+    currentBrochureIndex: number = 0;
 
     // current cropped image url.
     croppedImage: string | undefined;
@@ -26,6 +27,13 @@ export class AppComponent {
     // products contain product objects.
     products: Array<Product> = [];
     currentProductId: string | undefined;
+
+    // Change Current Image displayed on 
+    // Cropper.
+    changeCurrentBrochure(event: Event) {
+        const { value } = <HTMLSelectElement>event.target;
+        this.currentBrochureIndex = Number(value);
+    }
 
     async handleUpload(event: any) {
         const [file] = <File[]>event.target.files;
@@ -35,6 +43,7 @@ export class AppComponent {
             const imageURL = URL.createObjectURL(file);
             this.setBrochures([imageURL]);
         } else {
+            this.helperText = "Processing..."
             // PDF file should be converted to images
             // before setting to brochureImages.
             const formData = new FormData();
@@ -51,6 +60,8 @@ export class AppComponent {
                 const prefix = 'data:image/png;base64,'
                 return prefix + image;
             });
+            this.helperText = '';
+
             this.setBrochures(imageURLs);
         }
     }
