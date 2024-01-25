@@ -26,8 +26,8 @@
 <div class="workspace" *ngIf="brochureURLs">
   <!-- Left Section -->
   <div>
-    <label for="select-image">Select Page: </label>
-    <select id="select-image" (change)="changeCurrentBrochure($event)">
+    <label *ngIf="brochureURLs.length > 1" for="select-image">Select Page: </label>
+    <select *ngIf="brochureURLs.length > 1" id="select-image" (change)="changeCurrentBrochure($event)">
       <option *ngFor="let brochure of brochureURLs; index as i" [value]="i">
         Page {{ i + 1 }}
       </option>
