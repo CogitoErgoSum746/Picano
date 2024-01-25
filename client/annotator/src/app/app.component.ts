@@ -5,6 +5,7 @@ import { ImageCropperModule, ImageCroppedEvent } from 'ngx-image-cropper';
 import { ProductDetailsUpdator } from './product-extractor/product-extractor.component';
 import { Product } from './app.services';
 import { ChainSelectorComponent } from './chain-selector/chain-selector.component';
+import { API } from '../config/API';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,8 @@ import { ChainSelectorComponent } from './chain-selector/chain-selector.componen
 // of all products and their data.
 export class AppComponent {
     helperText: string = '';
-    brochureFile: File | undefined;
+    brochureURLs: string[] | undefined;
+    currentBrochureIndex: number = 0;
 
     // current cropped image url.
     croppedImage: string | undefined;
@@ -26,10 +28,46 @@ export class AppComponent {
     products: Array<Product> = [];
     currentProductId: string | undefined;
 
-    // handleImageUpload method injects the image into dom on upload.
-    showImage(event: any) {
-        const [file] = event.target.files;
-        this.brochureFile = file;
+    // Change Current Image displayed on 
+    // Cropper.
+    changeCurrentBrochure(event: Event) {
+        const { value } = <HTMLSelectElement>event.target;
+        this.currentBrochureIndex = Number(value);
+    }
+
+    async handleUpload(event: any) {
+        const [file] = <File[]>event.target.files;
+
+        // Check type of file.
+        if (file.type.startsWith("image")) {
+            const imageURL = URL.createObjectURL(file);
+            this.setBrochures([imageURL]);
+        } else {
+            this.helperText = "Processing..."
+            // PDF file should be converted to images
+            // before setting to brochureImages.
+            const formData = new FormData();
+            formData.append('pdf', file);
+
+            const response = await fetch(API.pdfToImages, { 
+                method: "POST",
+                body: formData
+            });
+            const { images } = await response.json();
+
+            // convert images to imageURLs.
+            const imageURLs: string[] = images.map((image: string) => {
+                const prefix = 'data:image/png;base64,'
+                return prefix + image;
+            });
+            this.helperText = '';
+
+            this.setBrochures(imageURLs);
+        }
+    }
+
+    setBrochures(urls: string[]) {
+        this.brochureURLs = urls;
         this.helperText = "Add a product to get started."
     }
 
