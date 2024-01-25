@@ -3,13 +3,13 @@
 </div>
 
 <!-- Provide file input if file is not already uploaded. -->
-<div class="upload-container" *ngIf="!brochureFile">
+<div class="upload-container" *ngIf="!brochureURLs">
   <label for="brochure">Upload a Brochure Image to work with:</label>
   <input
     id="brochure"
     type="file"
-    accept="image/*"
-    (change)="showImage($event)"
+    accept="image/*, application/pdf"
+    (change)="handleUpload($event)"
   />
 </div>
 
@@ -23,10 +23,10 @@
 </h4>
 
 <!-- Tool Work Area is mounted if file is uploaded. -->
-<div class="workspace" *ngIf="brochureFile">
+<div class="workspace" *ngIf="brochureURLs">
   <!-- Left Section -->
   <image-cropper
-    [imageFile]="brochureFile"
+    [imageURL]="brochureURLs[0]"
     [maintainAspectRatio]="false"
     format="png"
     (imageCropped)="imageCropped($event)"
@@ -45,7 +45,7 @@
 </div>
 
 <!-- Form to add a product. -->
-<div *ngIf="brochureFile" class="form-container">
+<div *ngIf="brochureURLs" class="form-container">
   <form (submit)="addProduct($event)">
     <input name="productId" type="text" />
     <button type="submit">Add Product</button>
