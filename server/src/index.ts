@@ -2,7 +2,7 @@ import express from "express";
 import { config } from "dotenv";
 config();
 
-import api from "./routes/vision-api";
+import api from "./routes/utilAPIs";
 import db1 from "./routes/fetch_haukka";
 
 // Instantiate express application.
