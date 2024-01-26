@@ -3,13 +3,13 @@
 </div>
 
 <!-- Provide file input if file is not already uploaded. -->
-<div class="upload-container" *ngIf="!brochureFile">
+<div class="upload-container" *ngIf="!brochureURLs">
   <label for="brochure">Upload a Brochure Image to work with:</label>
   <input
     id="brochure"
     type="file"
-    accept="image/*"
-    (change)="showImage($event)"
+    accept="image/*, application/pdf"
+    (change)="handleUpload($event)"
   />
 </div>
 
@@ -23,14 +23,23 @@
 </h4>
 
 <!-- Tool Work Area is mounted if file is uploaded. -->
-<div class="workspace" *ngIf="brochureFile">
+<div class="workspace" *ngIf="brochureURLs">
   <!-- Left Section -->
-  <image-cropper
-    [imageFile]="brochureFile"
-    [maintainAspectRatio]="false"
-    format="png"
-    (imageCropped)="imageCropped($event)"
-  ></image-cropper>
+  <div>
+    <label *ngIf="brochureURLs.length > 1" for="select-image">Select Page: </label>
+    <select *ngIf="brochureURLs.length > 1" id="select-image" (change)="changeCurrentBrochure($event)">
+      <option *ngFor="let brochure of brochureURLs; index as i" [value]="i">
+        Page {{ i + 1 }}
+      </option>
+    </select>
+
+    <image-cropper
+      [imageURL]="brochureURLs[currentBrochureIndex]"
+      [maintainAspectRatio]="false"
+      format="png"
+      (imageCropped)="imageCropped($event)"
+    ></image-cropper>
+  </div>
 
   <!-- Right Section -->
   <div class="product-preview">
@@ -45,7 +54,7 @@
 </div>
 
 <!-- Form to add a product. -->
-<div *ngIf="brochureFile" class="form-container">
+<div *ngIf="brochureURLs" class="form-container">
   <form (submit)="addProduct($event)">
     <input name="productId" type="text" />
     <button type="submit">Add Product</button>
@@ -89,6 +98,7 @@
     <td>{{ product.brand }}</td>
     <td>{{ product.name }}</td>
     <td>{{ product.description }}</td>
+    <td>{{ product.discountedPrice }}</td>
     <td>{{ product.campaignQuantity }}</td>
     <td>{{ product.restrictions }}</td>
     <td>{{ product.category }}</td>
