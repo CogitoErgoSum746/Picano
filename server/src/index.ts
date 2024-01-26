@@ -3,7 +3,11 @@ import { config } from "dotenv";
 config();
 
 import api from "./routes/utilAPIs";
-import db1 from "./routes/fetch_haukka";
+import db1 from "./routes/fetch_haukka";  
+import auth from "./routes/auth";
+import { handle404, handle500 } from "./controllers/errorController";
+
+import { verifyUser } from "./middlewares/verifyLogin";
 
 // Instantiate express application.
 const app = express();
@@ -20,8 +24,13 @@ app.use(function(req, res, next) {
 });
 
 // Mount API routes.
-app.use(api);
-app.use(db1);
+app.use("/auth", auth);
+app.use( verifyUser,api);
+app.use( verifyUser,db1);
+
+
+app.use(handle404); 
+app.use(handle500);
 
 app.listen(PORT, () => {
     console.log(`Server ready on port: ${PORT}`);
