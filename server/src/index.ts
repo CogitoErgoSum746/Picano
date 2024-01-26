@@ -5,6 +5,7 @@ config();
 import api from "./routes/utilAPIs";
 import db1 from "./routes/fetch_haukka";  
 import auth from "./routes/auth";
+import final_csv from "./routes/final_csv";
 import { handle404, handle500 } from "./controllers/errorController";
 
 import { verifyUser } from "./middlewares/verifyLogin";
@@ -27,6 +28,7 @@ app.use(function(req, res, next) {
 app.use("/auth", auth);
 app.use( verifyUser,api);
 app.use( verifyUser,db1);
+app.use( verifyUser,final_csv);
 
 
 app.use(handle404); 
