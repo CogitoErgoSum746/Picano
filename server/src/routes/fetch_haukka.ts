@@ -308,8 +308,6 @@ router.get('/auto-dropdown', async (req, res, next) => {
                 .map(str => JSON.parse(str))
         }
 
-        console.log("data sent")
-
         res.status(200).send(output)
     } catch (error) {
         console.error('Error executing SQL query:', error);
