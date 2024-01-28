@@ -103,11 +103,11 @@
         <!-- User-editable prefilled text input. -->
         <input
           name="category"
-          list="categories"
+          list="product-categories"
           [value]="product.category"
           (change)="handleChange($event)"
         />
-        <datalist *ngIf="categories.length > 0" id="categories">
+        <datalist *ngIf="categories.length > 0" id="product-categories">
             <option *ngFor="let category of categories" [value]="category"></option>
         </datalist>
       </div>

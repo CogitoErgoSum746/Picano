@@ -26,7 +26,7 @@ export class AppComponent {
     authenticated: Boolean = Boolean(localStorage.getItem("jwt"));
 
     setAuthenticated(status: Boolean) {
-        this.authenticated = status; 
+        this.authenticated = status;
     }
 
     helperText: string = '';
