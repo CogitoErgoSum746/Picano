@@ -91,9 +91,4 @@ export class ChainSelectorComponent {
         // Refetch data if data exists.
         if (data) this.loadData(queryParamKey, data.id, data.value);
     }
-
-    submitCampaign(event: Event) {
-        console.log(new FormData(<HTMLFormElement>event.target));
-        // TODO: POST API to submit data.
-    }
 }

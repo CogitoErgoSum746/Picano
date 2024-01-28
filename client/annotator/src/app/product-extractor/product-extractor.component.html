@@ -107,7 +107,7 @@
           [value]="product.category"
           (change)="handleChange($event)"
         />
-        <datalist id="categories">
+        <datalist *ngIf="categories.length > 0" id="categories">
             <option *ngFor="let category of categories" [value]="category"></option>
         </datalist>
       </div>
