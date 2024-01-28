@@ -161,4 +161,18 @@ export class AppComponent {
         const index = this.products.findIndex(product => product.id === newProduct.id);
         this.products.splice(index, 1, newProduct);
     }
+
+    // Submit products along with chain data.
+    handleSubmit() {
+        // Get chain data from dropdowns form.
+        const dropDownForm = <HTMLFormElement>document.getElementById('dropdowns');
+        const formData = new FormData(dropDownForm);
+        const dropdowns = Object.fromEntries(formData.entries())
+        console.log(dropdowns);
+        console.log(this.products);
+
+        // TODO: POST data to finalCSV api.
+
+
+    }
 }
