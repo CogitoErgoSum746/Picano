@@ -4,7 +4,7 @@
 <p *ngIf='!disableInput'>Click on any other field to refresh the data</p>
 <p *ngIf='disableInput'>Fetching data...</p>
 
-<form class="dropdowns" (change)="handleChange($event)" (submit)="submitCampaign($event)">
+<form id="dropdowns" class="dropdowns" (change)="handleChange($event)">
   <div>
     <label for="groups-input">Group: </label>
     <input [disabled]="disableInput" id="groups-input" list="groups" />
@@ -41,5 +41,4 @@
   </div>
 
   <button type="reset" (click)="resetLists()">Reset</button>
-  <button type="submit">Confirm</button>  
 </form>
