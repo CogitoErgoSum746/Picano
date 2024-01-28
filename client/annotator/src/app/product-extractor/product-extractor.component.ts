@@ -23,7 +23,11 @@ export class ProductDetailsUpdator {
 
     // Fetch and populate categories.
     async ngOnInit() {
-        const response = await fetch(API.productCategories);
+        const response = await fetch(API.productCategories, {
+            headers: {
+                authtoken: localStorage.getItem("jwt") || ''
+            }
+        });
         this.categories = await response.json();
     }
 
@@ -42,7 +46,10 @@ export class ProductDetailsUpdator {
 
         const response = await fetch(API.vision, {
             method: 'POST',
-            body: formData
+            body: formData,
+            headers: {
+                authtoken: localStorage.getItem("jwt") || ''
+            }
         });
 
         const responseObject = await response.json();

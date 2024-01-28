@@ -50,8 +50,11 @@ export class AppComponent {
     async handleUpload(event: any) {
         const [file] = <File[]>event.target.files;
         
-        const jwt = this.checkAuth();
-        if (!jwt) return;
+        const jwt = localStorage.getItem("jwt");
+        if (!jwt) {
+            this.authenticated = false;
+            return;
+        }
 
         // Check type of file.
         if (file.type.startsWith("image")) {
@@ -151,26 +154,32 @@ export class AppComponent {
     }
 
     // Submit products along with chain data.
-    handleSubmit() {
+    async handleSubmit() {
+        this.helperText = "Submitting...";
         // Get chain data from dropdowns form.
         const dropDownForm = <HTMLFormElement>document.getElementById('dropdowns');
         const formData = new FormData(dropDownForm);
         const dropdowns = Object.fromEntries(formData.entries())
-        console.log(dropdowns);
-        console.log(this.products);
+        const payload = {
+            campaign: dropdowns,
+            products: this.products
+        }
 
-        // TODO: POST data to finalCSV api.
+        const response = await fetch(API.submit, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                authtoken: ""
+            },
+            body: JSON.stringify(payload)
+        });
 
+        if (response.status === 200)
+            this.helperText = "Successfully submitted";
 
-    }
-
-    // returns the current Jwt, if empty it redirects the
-    // user to login page.
-    checkAuth() {
-        const jwt = localStorage.getItem("jwt");
-
-        if (!jwt) this.authenticated = false;
-
-        return jwt;
+        // Redirect to login page.
+        if (response.status === 403)
+            this.authenticated = false;
+        
     }
 }
