@@ -6,17 +6,47 @@ import { ProductDetailsUpdator } from './product-extractor/product-extractor.com
 import { Product } from './app.services';
 import { ChainSelectorComponent } from './chain-selector/chain-selector.component';
 import { API } from '../config/API';
+import { LoginComponent } from './login/login.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, ImageCropperModule, ProductDetailsUpdator, ChainSelectorComponent],
+  imports: [
+    CommonModule, RouterOutlet, ImageCropperModule, 
+    ProductDetailsUpdator, ChainSelectorComponent, LoginComponent
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 // AppComponent provides an interface to upload a brochure and keep track
 // of all products and their data.
 export class AppComponent {
+    // user holds the current user details.
+    // check for undefined user to display login page.
+    user: string | undefined;
+
+    async ngOnInit() {
+        // Check if a authenticated session exists.
+        const jwt = localStorage.getItem("jwt");
+
+        // Empty jwt. Not authenticated.
+        if (!jwt) {
+            this.user = undefined;
+            return;
+        }
+
+        const response = await fetch(API.profile, {
+            method: "POST",
+            headers: {
+                authtoken: jwt
+            }
+        });
+
+        const user = await response.json();
+        console.log(user);
+
+    }
+
     helperText: string = '';
     brochureURLs: string[] | undefined;
     currentBrochureIndex: number = 0;

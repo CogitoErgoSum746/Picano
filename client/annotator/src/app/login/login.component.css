@@ -1,0 +1,16 @@
+.container {
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 40px;
+}
+
+.container > div {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    font-size: large;
+    color: #2C3639;
+}

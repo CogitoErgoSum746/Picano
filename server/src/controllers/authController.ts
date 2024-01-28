@@ -23,6 +23,8 @@ export async function login(req: Request, res: Response, next: NextFunction): Pr
 
         const user = await executeQuery(query, [username, password]);
 
+        console.log(user); // user is [].
+
         if (!user) {
             res.status(403).json({ success: false, message: 'Access denied' });
             return;

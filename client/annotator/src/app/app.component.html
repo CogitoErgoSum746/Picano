@@ -2,108 +2,120 @@
   <h1>Product Annotation Tool</h1>
 </div>
 
-<!-- Provide file input if file is not already uploaded. -->
-<div class="upload-container" *ngIf="!brochureURLs">
-  <label for="brochure">Upload a Brochure Image to work with:</label>
-  <input
-    id="brochure"
-    type="file"
-    accept="image/*, application/pdf"
-    (change)="handleUpload($event)"
-  />
-</div>
+<!-- Display login page if user is not available -->
+<app-login *ngIf="!user"></app-login>
 
-<!-- Helper text to navigate the tool. -->
-<h4>{{ helperText }}</h4>
-
-<!-- Default text if no helperText is present. -->
-<h4 *ngIf="!helperText && currentProductId">
-  Working on Product: {{ currentProductId }}. Annotate a section and click on
-  extract button to extract text.
-</h4>
-
-<!-- Tool Work Area is mounted if file is uploaded. -->
-<div class="workspace" *ngIf="brochureURLs">
-  <!-- Left Section -->
-  <div>
-    <label *ngIf="brochureURLs.length > 1" for="select-image">Select Page: </label>
-    <select *ngIf="brochureURLs.length > 1" id="select-image" (change)="changeCurrentBrochure($event)">
-      <option *ngFor="let brochure of brochureURLs; index as i" [value]="i">
-        Page {{ i + 1 }}
-      </option>
-    </select>
-
-    <image-cropper
-      [imageURL]="brochureURLs[currentBrochureIndex]"
-      [maintainAspectRatio]="false"
-      format="png"
-      (imageCropped)="imageCropped($event)"
-    ></image-cropper>
+<!-- Auth protected page. -->
+<ng-container *ngIf="user">
+  <!-- Provide file input if file is not already uploaded. -->
+  <div class="upload-container" *ngIf="!brochureURLs">
+    <label for="brochure">Upload a Brochure Image to work with:</label>
+    <input
+      id="brochure"
+      type="file"
+      accept="image/*, application/pdf"
+      (change)="handleUpload($event)"
+    />
   </div>
 
-  <!-- Right Section -->
-  <div class="product-preview">
-    <!-- Each product and its details can be independantly cropped and updated. -->
-    <app-product-extractor
-      *ngIf="currentProductId"
-      [product]="getCurrentProduct()"
-      [imageUrl]="croppedImage"
-      (updateProduct)="setProductDetails($event)"
-    ></app-product-extractor>
-  </div>
-</div>
+  <!-- Helper text to navigate the tool. -->
+  <h4>{{ helperText }}</h4>
 
-<!-- Form to add a product. -->
-<div *ngIf="brochureURLs" class="form-container">
-  <form (submit)="addProduct($event)">
-    <input name="productId" type="text" />
-    <button type="submit">Add Product</button>
-  </form>
+  <!-- Default text if no helperText is present. -->
+  <h4 *ngIf="!helperText && currentProductId">
+    Working on Product: {{ currentProductId }}. Annotate a section and click on
+    extract button to extract text.
+  </h4>
 
-  <div *ngIf="products.length > 0">
-    <label for="products">Change product: </label>
-    <select id="products" (change)="changeCurrentProduct($event)">
-      <option
-        *ngFor="let product of products"
-        [selected]="isCurrentProduct(product.id)"
-        value="{{ product.id }}"
+  <!-- Tool Work Area is mounted if file is uploaded. -->
+  <div class="workspace" *ngIf="brochureURLs">
+    <!-- Left Section -->
+    <div>
+      <label *ngIf="brochureURLs.length > 1" for="select-image"
+        >Select Page:
+      </label>
+      <select
+        *ngIf="brochureURLs.length > 1"
+        id="select-image"
+        (change)="changeCurrentBrochure($event)"
       >
-        {{ product.id }}
-      </option>
-    </select>
+        <option *ngFor="let brochure of brochureURLs; index as i" [value]="i">
+          Page {{ i + 1 }}
+        </option>
+      </select>
+
+      <image-cropper
+        [imageURL]="brochureURLs[currentBrochureIndex]"
+        [maintainAspectRatio]="false"
+        format="png"
+        (imageCropped)="imageCropped($event)"
+      ></image-cropper>
+    </div>
+
+    <!-- Right Section -->
+    <div class="product-preview">
+      <!-- Each product and its details can be independantly cropped and updated. -->
+      <app-product-extractor
+        *ngIf="currentProductId"
+        [product]="getCurrentProduct()"
+        [imageUrl]="croppedImage"
+        (updateProduct)="setProductDetails($event)"
+      ></app-product-extractor>
+    </div>
   </div>
-</div>
 
-<!-- Group, Chain, Store assigner. -->
-<app-chain-selector></app-chain-selector>
+  <!-- Form to add a product. -->
+  <div *ngIf="brochureURLs" class="form-container">
+    <form (submit)="addProduct($event)">
+      <input name="productId" type="text" />
+      <button type="submit">Add Product</button>
+    </form>
 
-<!-- Table with extracted data of all products -->
-<h3 *ngIf="products.length > 0">Product Summary:</h3>
-<table *ngIf="products.length > 0" class="product-table">
-  <!-- Header row. -->
-  <tr>
-    <!-- Render ID column at the beginning. -->
-    <th>ID</th>
-    <th>Brand Name</th>
-    <th>Product Name</th>
-    <th>Description</th>
-    <th>Campaign Quantity</th>
-    <th>Restrictions</th>
-    <th>Product Category</th>
-  </tr>
+    <div *ngIf="products.length > 0">
+      <label for="products">Change product: </label>
+      <select id="products" (change)="changeCurrentProduct($event)">
+        <option
+          *ngFor="let product of products"
+          [selected]="isCurrentProduct(product.id)"
+          value="{{ product.id }}"
+        >
+          {{ product.id }}
+        </option>
+      </select>
+    </div>
+  </div>
 
-  <!-- Data rows. -->
-  <tr *ngFor="let product of products">
-    <td>{{ product.id }}</td>
-    <td>{{ product.brand }}</td>
-    <td>{{ product.name }}</td>
-    <td>{{ product.description }}</td>
-    <td>{{ product.discountedPrice }}</td>
-    <td>{{ product.campaignQuantity }}</td>
-    <td>{{ product.restrictions }}</td>
-    <td>{{ product.category }}</td>
-  </tr>
-</table>
+  <!-- Group, Chain, Store assigner. -->
+  <app-chain-selector></app-chain-selector>
 
-<!-- Submit product data -->
-<button *ngIf="products.length > 0">Submit</button>
+  <!-- Table with extracted data of all products -->
+  <h3 *ngIf="products.length > 0">Product Summary:</h3>
+  <table *ngIf="products.length > 0" class="product-table">
+    <!-- Header row. -->
+    <tr>
+      <!-- Render ID column at the beginning. -->
+      <th>ID</th>
+      <th>Brand Name</th>
+      <th>Product Name</th>
+      <th>Description</th>
+      <th>Campaign Quantity</th>
+      <th>Restrictions</th>
+      <th>Product Category</th>
+    </tr>
+
+    <!-- Data rows. -->
+    <tr *ngFor="let product of products">
+      <td>{{ product.id }}</td>
+      <td>{{ product.brand }}</td>
+      <td>{{ product.name }}</td>
+      <td>{{ product.description }}</td>
+      <td>{{ product.discountedPrice }}</td>
+      <td>{{ product.campaignQuantity }}</td>
+      <td>{{ product.restrictions }}</td>
+      <td>{{ product.category }}</td>
+    </tr>
+  </table>
+
+  <!-- Submit product data -->
+  <button *ngIf="products.length > 0">Submit</button>
+</ng-container>
