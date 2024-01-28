@@ -1,13 +1,15 @@
 <form class="container" (submit)="handleSubmit($event)">
   <div>
     <label for="username">Username: </label>
-    <input required placeholder="User" id="username" />
+    <input required placeholder="User" id="username" name="username" /> 
   </div>
 
   <div>
     <label for="password">Password: </label>
-    <input required type="password" id="password" />
+    <input required type="password" id="password" name="password" />
   </div>
+
+  <span>{{ message }}</span>
 
   <button type="submit">Login</button>
 </form>

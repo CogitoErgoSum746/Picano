@@ -23,28 +23,10 @@ import { LoginComponent } from './login/login.component';
 export class AppComponent {
     // user holds the current user details.
     // check for undefined user to display login page.
-    user: string | undefined;
+    authenticated: Boolean = Boolean(localStorage.getItem("jwt"));
 
-    async ngOnInit() {
-        // Check if a authenticated session exists.
-        const jwt = localStorage.getItem("jwt");
-
-        // Empty jwt. Not authenticated.
-        if (!jwt) {
-            this.user = undefined;
-            return;
-        }
-
-        const response = await fetch(API.profile, {
-            method: "POST",
-            headers: {
-                authtoken: jwt
-            }
-        });
-
-        const user = await response.json();
-        console.log(user);
-
+    setAuthenticated(status: Boolean) {
+        this.authenticated = status; 
     }
 
     helperText: string = '';
@@ -67,6 +49,9 @@ export class AppComponent {
 
     async handleUpload(event: any) {
         const [file] = <File[]>event.target.files;
+        
+        const jwt = this.checkAuth();
+        if (!jwt) return;
 
         // Check type of file.
         if (file.type.startsWith("image")) {
@@ -81,7 +66,10 @@ export class AppComponent {
 
             const response = await fetch(API.pdfToImages, { 
                 method: "POST",
-                body: formData
+                body: formData,
+                headers: {
+                    "authtoken": jwt
+                }
             });
             const { images } = await response.json();
 
@@ -174,5 +162,15 @@ export class AppComponent {
         // TODO: POST data to finalCSV api.
 
 
+    }
+
+    // returns the current Jwt, if empty it redirects the
+    // user to login page.
+    checkAuth() {
+        const jwt = localStorage.getItem("jwt");
+
+        if (!jwt) this.authenticated = false;
+
+        return jwt;
     }
 }

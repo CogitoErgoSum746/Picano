@@ -14,3 +14,7 @@
     font-size: large;
     color: #2C3639;
 }
+
+.container > span {
+    color: red;
+}
