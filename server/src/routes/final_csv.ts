@@ -8,7 +8,7 @@ router.post('/finalCSV', async (req: Request, res: Response) => {
         const data = req.body;
 
         if (!Array.isArray(data) || data.length === 0) {
-            return res.status(400).json({ message: 'Invalid input' });
+            return res.status(400).json({ success:false, message: 'Invalid input' });
         }
 
         const values = data.map(row => {
@@ -52,7 +52,7 @@ router.post('/finalCSV', async (req: Request, res: Response) => {
         // Execute the insert query
         await executeQuery(insertQuery);
 
-        res.status(200).json({ message: 'Data inserted successfully' });
+        res.status(200).json({ success: true, message: 'Data inserted successfully' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal server error' });

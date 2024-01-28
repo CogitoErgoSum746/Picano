@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import { config } from "dotenv";
 config();
 
@@ -18,11 +19,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // WARN: Cors fix, remove in production.
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+app.use(
+    cors({
+    origin: ['http://158.220.90.117', 'http://localhost:4200'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    // credentials: true,
+    optionsSuccessStatus: 204,
+}));
 
 // Mount API routes.
 app.use("/auth", auth);
