@@ -26,9 +26,9 @@ app.use(function(req, res, next) {
 
 // Mount API routes.
 app.use("/auth", auth);
-app.use( verifyUser,api);
-app.use( verifyUser,db1);
-app.use( verifyUser,final_csv);
+app.use(verifyUser, api);
+app.use(verifyUser, db1);
+app.use(verifyUser, final_csv);
 
 
 app.use(handle404); 
