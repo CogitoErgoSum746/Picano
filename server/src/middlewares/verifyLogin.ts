@@ -23,7 +23,7 @@ export const verifyUser = async (req: Request, res: Response, next: NextFunction
     }
 
     if (data.exp < Date.now() / 1000) {
-      res.status(401).json({ error: 'Token has expired' });
+      res.status(401).json({ success: false, error: 'Token has expired' });
       return;
     }
 

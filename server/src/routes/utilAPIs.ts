@@ -25,7 +25,7 @@ router.post('/vision', upload.single('image'), async (req: Request, res: Respons
 
         const text = result.fullTextAnnotation?.text;
 
-        res.status(200).json({ 'text': text });
+        res.status(200).json({ success: true, 'text': text });
     } catch (error) {
         console.error('Error in vision api:', error);
         res.status(500).json({ error: 'Internal Server Error' });
