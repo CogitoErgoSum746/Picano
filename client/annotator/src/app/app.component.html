@@ -2,11 +2,11 @@
   <h1>Product Annotation Tool</h1>
 </div>
 
-<!-- Display login page if user is not available -->
-<app-login *ngIf="false"></app-login>
+<!-- Display login page if jwt is not available -->
+<app-login *ngIf="!authenticated" (authenticated)="setAuthenticated($event)"></app-login>
 
 <!-- Auth protected page. -->
-<ng-container *ngIf="true">
+<ng-container *ngIf="authenticated">
   <!-- Provide file input if file is not already uploaded. -->
   <div class="upload-container" *ngIf="!brochureURLs">
     <label for="brochure">Upload a Brochure Image to work with:</label>

@@ -1,23 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { API } from '../../config/API';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-    handleSubmit(event: Event) {
+    // Pass user to parent component.
+    @Output() authenticated: EventEmitter<Boolean> = new EventEmitter();
+    message: string = '';
+
+    async handleSubmit(event: Event) {
         event.preventDefault();
         const form = <HTMLFormElement>event.target;
         const formData = new FormData(form);
-        const payload = {
-            "username": "h",
-            "password": "h"
-        };
-        const response = fetch(API.login, {
+        const payload = Object.fromEntries(formData.entries());
+        console.log(payload);
+        const response = await fetch(API.login, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -25,7 +28,17 @@ export class LoginComponent {
             body: JSON.stringify(payload)
         });
 
-        // TODO: set JWT in localStorage.
-        // set this.user to user.
+        const data = await response.json();
+
+        if (data.success === false) {
+            this.message = data.message;
+            localStorage.clear();
+        }
+
+        if (data.success === true) {
+            this.message = '';
+            localStorage.setItem("jwt", data.authtoken);
+            this.authenticated.emit(true);
+        }
     }
 }
