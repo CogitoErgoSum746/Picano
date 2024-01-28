@@ -23,15 +23,13 @@ export async function login(req: Request, res: Response, next: NextFunction): Pr
 
         const user = await executeQuery(query, [username, password]);
 
-        console.log(user); // user is [].
-
-        if (!user) {
+        if (!user[0]) {
             res.status(403).json({ success: false, message: 'Access denied' });
             return;
         }
 
         // Token authentication using JWT
-        const authtoken = signToken(user[0].username, user[0].password);
+        const authtoken = signToken(user[0].username);
 
         res.status(200).json({ success: true, authtoken });
         return;

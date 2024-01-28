@@ -27,12 +27,11 @@ export const verifyUser = async (req: Request, res: Response, next: NextFunction
       return;
     }
 
-    const username = data.user.username 
-    const password = data.user.password
+    const username = data.user.username
 
-    const query = `SELECT username, password FROM admin_operators_auth WHERE username = ? AND password = ?`
+    const query = `SELECT username, password FROM admin_operators_auth WHERE username = ?`
 
-    const user = await executeQuery(query, [username, password]);
+    const user = await executeQuery(query, [username]);
 
     if (user) {
       // req.user = data.user;
