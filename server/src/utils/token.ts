@@ -3,11 +3,10 @@ import { config } from 'dotenv';
 
 config({ path: './.env' });
 
-export function signToken ( username: string, password: string): string {
+export function signToken ( username: string): string {
     const data = {
         user: {
-            username,
-            password
+            username
         },
     };
 
