@@ -32,11 +32,15 @@ export class ChainSelectorComponent {
 
     // Fetches and assigns dataLists.
     async loadData(field = '', id = '', value = '') {
+        const jwt = localStorage.getItem("jwt") || '';
+
         // Disable user input until data is fetched
         // and auto completed.
         this.disableInput = true;
 
-        const response = await fetch(API.dropdownFilter(field, id, value));
+        const response = await fetch(API.dropdownFilter(field, id, value), {
+            headers: { authtoken: jwt }
+        });
         const data = await response.json();
         this.groups = data.group;
         this.chainCategories = data.chain_category;
