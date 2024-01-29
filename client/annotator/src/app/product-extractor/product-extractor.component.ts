@@ -18,16 +18,30 @@ export class ProductDetailsUpdator {
     // to update products array.
     @Output() updateProduct: EventEmitter<Product> = new EventEmitter();
 
+    // Communicate Unauthorised state to parent.
+    @Output() authorised: EventEmitter<Boolean> = new EventEmitter();
+
     // Populate predefined product categories.
     categories: string[] = [];
 
     // Fetch and populate categories.
     async ngOnInit() {
+        const jwt = localStorage.getItem("jwt");
+
+        if (!jwt) {
+            this.authorised.emit(false);
+            return;
+        }
+
         const response = await fetch(API.productCategories, {
-            headers: {
-                authtoken: localStorage.getItem("jwt") || ''
-            }
+            headers: { authtoken: jwt }
         });
+
+        if (response.status === 401) {
+            this.authorised.emit(false);
+            return;
+        }
+
         this.categories = await response.json();
     }
 
@@ -44,11 +58,18 @@ export class ProductDetailsUpdator {
         const formData = new FormData();
         formData.append('image', image);
 
+        const jwt = localStorage.getItem("jwt");
+
+        if (!jwt) {
+            this.authorised.emit(false);
+            return;
+        }
+
         const response = await fetch(API.vision, {
             method: 'POST',
             body: formData,
             headers: {
-                authtoken: localStorage.getItem("jwt") || ''
+                authtoken: jwt
             }
         });
 
