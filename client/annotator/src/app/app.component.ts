@@ -164,12 +164,19 @@ export class AppComponent {
             campaign: dropdowns,
             products: this.products
         }
+        
+        const jwt = localStorage.getItem("jwt");
+
+        if (!jwt) {
+            this.authenticated = false;
+            return;
+        }
 
         const response = await fetch(API.submit, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                authtoken: ""
+                authtoken: jwt
             },
             body: JSON.stringify(payload)
         });
