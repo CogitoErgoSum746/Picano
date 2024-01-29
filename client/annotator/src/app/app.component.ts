@@ -181,12 +181,15 @@ export class AppComponent {
             body: JSON.stringify(payload)
         });
 
-        if (response.status === 200)
-            this.helperText = "Successfully submitted";
-
         // Redirect to login page.
-        if (response.status === 403)
+        if (response.status === 401) {
             this.authenticated = false;
+            return
+        }
         
+        if (response.status === 400) {
+            this.helperText = (await response.json()).message;
+            return;
+        }
     }
 }
