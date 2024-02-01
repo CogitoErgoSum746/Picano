@@ -60,6 +60,7 @@
         [product]="getCurrentProduct()"
         [imageUrl]="croppedImage"
         (updateProduct)="setProductDetails($event)"
+        (authorised)="setAuthenticated($event)"
       ></app-product-extractor>
     </div>
   </div>
@@ -86,7 +87,7 @@
   </div>
 
   <!-- Group, Chain, Store assigner. -->
-  <app-chain-selector></app-chain-selector>
+  <app-chain-selector (authorised)="setAuthenticated($event)"></app-chain-selector>
 
   <!-- Table with extracted data of all products -->
   <h3 *ngIf="products.length > 0">Product Summary:</h3>

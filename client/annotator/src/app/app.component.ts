@@ -164,22 +164,32 @@ export class AppComponent {
             campaign: dropdowns,
             products: this.products
         }
+        
+        const jwt = localStorage.getItem("jwt");
+
+        if (!jwt) {
+            this.authenticated = false;
+            return;
+        }
 
         const response = await fetch(API.submit, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                authtoken: ""
+                authtoken: jwt
             },
             body: JSON.stringify(payload)
         });
 
-        if (response.status === 200)
-            this.helperText = "Successfully submitted";
-
         // Redirect to login page.
-        if (response.status === 403)
+        if (response.status === 401) {
             this.authenticated = false;
+            return
+        }
         
+        if (response.status === 400) {
+            this.helperText = (await response.json()).message;
+            return;
+        }
     }
 }
