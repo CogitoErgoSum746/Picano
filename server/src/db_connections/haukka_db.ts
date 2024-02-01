@@ -18,6 +18,8 @@ export async function executeQuery(query: string, values?: any[]): Promise<any> 
     try {
         const [rows] = await connection.execute(query, values);
         return rows;
+    } catch (err) {
+        console.log(err);
     } finally {
         connection.end(); // Close the connection in a finally block to ensure it always happens
     }
