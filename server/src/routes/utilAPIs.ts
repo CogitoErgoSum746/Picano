@@ -32,28 +32,4 @@ router.post('/vision', upload.single('image'), async (req: Request, res: Respons
     }
 });
 
-router.post('/pdf-to-images', upload.single('pdf'), async (req: Request, res: Response) => {
-    try {
-        if (!req.file) return res.status(400).json({ "message": "No pdf provided."});
-
-        // Create folder if it doesn't exist.
-        fs.mkdirSync('./temp', { recursive: true });
-
-        // Store PDF locally. We need a path to provide for conversion.
-        fs.writeFileSync(`./temp/file.pdf`, req.file.buffer);
-
-        // Convert to images.
-        const images = await pdf2img.convert('./temp/file.pdf', { base64: true });
-
-        // Delete the PDF.
-        fs.unlinkSync('./temp/file.pdf');
-
-        res.json({"images": images});
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Internal Server error" });
-    }
-});
-
 export default router;
