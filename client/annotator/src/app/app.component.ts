@@ -164,7 +164,7 @@ export class AppComponent {
             campaign: dropdowns,
             products: this.products
         }
-        
+
         const jwt = localStorage.getItem("jwt");
 
         if (!jwt) {
