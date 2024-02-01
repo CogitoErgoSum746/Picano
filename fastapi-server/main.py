@@ -1,11 +1,24 @@
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 import fitz
 from io import BytesIO
 from PIL import Image
 import base64
 
 app = FastAPI()
+
+# Configure CORS settings
+origins = [
+    'http://158.220.90.117', 'http://localhost:4200'
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_methods=['GET', 'POST', 'PUT', 'DELETE'],
+    # options_success_status=204,
+)
 
 def convert_pdf_to_png(pdf_bytes, zoom=2):
     doc = fitz.open(stream=pdf_bytes)
@@ -26,13 +39,13 @@ def convert_pdf_to_png(pdf_bytes, zoom=2):
     return i, images
 
 @app.post("/pdf-to-images")
-async def convert_pdf_to_png_route(file: UploadFile = File(...), zoom: int = 2):
+async def convert_pdf_to_png_route(pdf: UploadFile = File(...), zoom: int = 2):
     try:
-        pdf_bytes = await file.read()
+        pdf_bytes = await pdf.read()
 
         pages_count, images = convert_pdf_to_png(pdf_bytes, zoom)
 
-        return { "page_count": {pages_count}, "images_array": images}
+        return { "images": images}
 
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
