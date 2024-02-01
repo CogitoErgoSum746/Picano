@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { API } from '../../config/API';
 
 type DataNode = {
@@ -21,6 +21,9 @@ export class ChainSelectorComponent {
     chainCategories: DataNode[] = [];
     disableInput: Boolean = false;
 
+    // Communicate Unauthorised state to parent.
+    @Output() authorised: EventEmitter<Boolean> = new EventEmitter();
+
     ngOnInit() {
         this.loadData();
     }
@@ -32,7 +35,12 @@ export class ChainSelectorComponent {
 
     // Fetches and assigns dataLists.
     async loadData(field = '', id = '', value = '') {
-        const jwt = localStorage.getItem("jwt") || '';
+        const jwt = localStorage.getItem("jwt");
+
+        if (!jwt) {
+            this.authorised.emit(false);
+            return;
+        }
 
         // Disable user input until data is fetched
         // and auto completed.
@@ -41,6 +49,12 @@ export class ChainSelectorComponent {
         const response = await fetch(API.dropdownFilter(field, id, value), {
             headers: { authtoken: jwt }
         });
+
+        if (response.status === 401) {
+            this.authorised.emit(false);
+            return;
+        }
+
         const data = await response.json();
         this.groups = data.group;
         this.chainCategories = data.chain_category;
