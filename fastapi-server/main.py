@@ -25,7 +25,7 @@ def convert_pdf_to_png(pdf_bytes, zoom=2):
 
     return i, images
 
-@app.post("/convert_pdf_to_png")
+@app.post("/pdf-to-images")
 async def convert_pdf_to_png_route(file: UploadFile = File(...), zoom: int = 2):
     try:
         pdf_bytes = await file.read()
@@ -36,10 +36,6 @@ async def convert_pdf_to_png_route(file: UploadFile = File(...), zoom: int = 2):
 
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
-
-@app.get("/")
-def read_root():
-    return {"message": "Hello, World!"}
 
 if __name__ == "__main__":
     import uvicorn
