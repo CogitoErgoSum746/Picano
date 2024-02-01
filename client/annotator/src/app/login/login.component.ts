@@ -19,7 +19,6 @@ export class LoginComponent {
         const form = <HTMLFormElement>event.target;
         const formData = new FormData(form);
         const payload = Object.fromEntries(formData.entries());
-        console.log(payload);
         const response = await fetch(API.login, {
             method: "POST",
             headers: {
