@@ -52,15 +52,25 @@ router.post('/finalCSV', async (req: Request, res: Response) => {
         const campaignIds = await getCampaignData(campaign);
 
         let values = products.map((product: any) => 
-            ([ campaign.group, campaign.category, campaign.chain, campaign.store,
-            product.brand, product.name, product.description, product.discountedPrice,
-            product.campaignQuantity, product.restrictions, product.category,
-            product.from, product.to, campaignIds[0], campaignIds[1], campaignIds[2], campaignIds[3]  ])
+        {
+            let fromDate = campaign.from
+            let toDate = campaign.to
+        
+            if (product.to && product.from) {
+                fromDate = product.from
+                toDate = product.to
+            }
+        
+            return [
+                campaign.group, campaign.category, campaign.chain, campaign.store,
+                product.brand, product.name, product.description, product.discountedPrice,
+                product.campaignQuantity, product.restrictions, product.category,
+                fromDate, toDate, campaignIds[0], campaignIds[1], campaignIds[2], campaignIds[3]
+            ];
+        }
         );
 
         values = values.flat()
-
-
 
         const insertQuery = `
 INSERT INTO Final_products_csv (groupname, chainCategory, chain, storeNameFI, brandName, 
