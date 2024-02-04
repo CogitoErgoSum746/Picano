@@ -13,14 +13,14 @@ router.post('/finalCSV', async (req: Request, res: Response) => {
 
         const { campaign, products } = data;
 
-        const perRowPlaceholder = `(${Array.from({ length: 13 }, () => '?').join(', ')})` ;
+        const perRowPlaceholder = `(${Array.from({ length: 17 }, () => '?').join(', ')})` ;
         const placeholder = products.map(() => perRowPlaceholder).join(',');
 
         let values = products.map((product: any) => 
             ([ campaign.group, campaign.category, campaign.chain, campaign.store,
             product.brand, product.name, product.description, product.discountedPrice,
             product.campaignQuantity, product.restrictions, product.category,
-            product.from, product.to ])
+            product.from, product.to, groupId, categoryId, chainId, storeId ])
         );
 
         values = values.flat()
@@ -30,7 +30,8 @@ router.post('/finalCSV', async (req: Request, res: Response) => {
         const insertQuery = `
 INSERT INTO final_products (group_name, chain_category, chain_name, store_name_fi, brand_name, 
                             product_name, product_description, discounted_product_price, 
-                            campaign_quantity, restrictions, product_category, campaign_start_date, campaign_end_date) 
+                            campaign_quantity, restrictions, product_category, campaign_start_date, campaign_end_date
+                            group_id, chain_category_id, chain_id, store_id) 
 VALUES ${placeholder};
 `;
         await executeQuery(insertQuery, values);
