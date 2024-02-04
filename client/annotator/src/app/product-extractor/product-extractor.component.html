@@ -111,5 +111,34 @@
             <option *ngFor="let category of categories" [value]="category"></option>
         </datalist>
       </div>
+
+      <div class="product-attribute">
+        <label for="from">From Date</label>
+
+        <!-- Placeholder for button -->
+        <div></div>
+
+        <input
+          type="date"
+          id="from"
+          name="from"
+          [value]="product.from"
+          (change)="handleChange($event)"
+        />
+      </div>
+      <div class="product-attribute">
+        <label for="to">To Date</label>
+
+        <!-- Placeholder for button -->
+        <div></div>
+
+        <input
+          type="date"
+          id="to"
+          name="to"
+          [value]="product.to"
+          (change)="handleChange($event)"
+        />
+      </div>
   </div>
 </div>

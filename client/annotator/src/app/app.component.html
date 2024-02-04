@@ -87,7 +87,10 @@
   </div>
 
   <!-- Group, Chain, Store assigner. -->
-  <app-chain-selector (authorised)="setAuthenticated($event)"></app-chain-selector>
+  <app-chain-selector 
+    (authorised)="setAuthenticated($event)" 
+    (dateChangeEvent)="setDefaultDate($event)" 
+  ></app-chain-selector>
 
   <!-- Table with extracted data of all products -->
   <h3 *ngIf="products.length > 0">Product Summary:</h3>
@@ -103,6 +106,8 @@
       <th>Campaign Quantity</th>
       <th>Restrictions</th>
       <th>Product Category</th>
+      <th>From Date</th>
+      <th>To Date</th>
     </tr>
 
     <!-- Data rows. -->
@@ -115,6 +120,8 @@
       <td>{{ product.campaignQuantity }}</td>
       <td>{{ product.restrictions }}</td>
       <td>{{ product.category }}</td>
+      <td>{{ product.from }}</td>
+      <td>{{ product.to }}</td>
     </tr>
   </table>
 

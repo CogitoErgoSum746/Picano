@@ -192,4 +192,27 @@ export class AppComponent {
             return;
         }
     }
+
+    // Sets campaign date to all products
+    // if product level date is not set.
+    setDefaultDate(date: {from?: Date, to?: Date}) {
+        let key: keyof typeof date;
+        let value: Date;
+
+        // Check which date is updated from key.
+        if (date.hasOwnProperty("from")) {
+            key = 'from'
+            value = date["from"]!;
+        } else if (date.hasOwnProperty("to")) {
+            key = 'to'
+            value = date["to"]!;
+        }
+
+        // Set the date to all products with null dates.
+        this.products.forEach(product => {
+            if (!product[key]) {
+                product[key] = value
+            }
+        });
+    }
 }

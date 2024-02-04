@@ -84,7 +84,7 @@ export class ProductDetailsUpdator {
     }
 
     // updateAttribute updates the parent's product state.
-    updateProductAttribute(attribute: string, value: string) {
+    updateProductAttribute(attribute: string, value: any) {
         this.product[attribute as keyof Product] = value;
         this.updateProduct.emit(this.product);
     }
