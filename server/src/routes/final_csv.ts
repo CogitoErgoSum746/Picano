@@ -20,7 +20,7 @@ router.post('/finalCSV', async (req: Request, res: Response) => {
             ([ campaign.group, campaign.category, campaign.chain, campaign.store,
             product.brand, product.name, product.description, product.discountedPrice,
             product.campaignQuantity, product.restrictions, product.category,
-            campaign.from, campaign.to ])
+            product.from, product.to ])
         );
 
         values = values.flat()
