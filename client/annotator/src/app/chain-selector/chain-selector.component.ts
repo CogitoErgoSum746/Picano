@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { API } from '../../config/API';
+import { Product } from '../app.services';
 
 type DataNode = {
     id: string;
@@ -23,6 +24,9 @@ export class ChainSelectorComponent {
 
     // Communicate Unauthorised state to parent.
     @Output() authorised: EventEmitter<Boolean> = new EventEmitter();
+
+    // Communicate dates to parent.
+    @Output() dateChangeEvent: EventEmitter<{from?: Date, to?: Date}> = new EventEmitter();
 
     ngOnInit() {
         this.loadData();
@@ -90,6 +94,13 @@ export class ChainSelectorComponent {
     // we have to update the dropdown contents.
     handleChange(event: Event) {
         const { id, value } = <HTMLInputElement>event.target;
+
+        // Date change events are passed to app.component.ts.
+        if (id === 'from' || id === 'to') {
+            this.dateChangeEvent.emit({ [id]: value });
+            return;
+        }
+
         let queryParamKey = '';
         let data: DataNode | undefined;
         if (id === 'groups-input') {

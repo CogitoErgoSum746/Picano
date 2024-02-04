@@ -7,6 +7,8 @@ export class Product {
     campaignQuantity: string;
     category: string;
     restrictions: string;
+    from: Date | null;
+    to: Date | null;
 
     constructor(id: string) {
         this.id = id;
@@ -17,5 +19,7 @@ export class Product {
         this.campaignQuantity = '';
         this.restrictions = '';
         this.category = '';
+        this.from = null;
+        this.to = null;
     }
 }
