@@ -68,12 +68,14 @@ router.post('/finalCSV', async (req: Request, res: Response) => {
                         toDate = product.to
                     }
 
-                    return [
+                    const filteredValues = [
                         campaign.group, campaign.category, campaign.chain, campaign.store,
                         product.brand, product.name, product.description, product.discountedPrice,
                         product.campaignQuantity, product.restrictions, product.category,
                         fromDate, toDate, campaignIds[0], campaignIds[1], campaignIds[2], campaignIds[3],
                     ];
+
+                    return filteredValues.map((value) => (value !== undefined ? value : null));
                 }
                 );
 
