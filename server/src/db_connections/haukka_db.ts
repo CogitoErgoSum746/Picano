@@ -1,7 +1,7 @@
 import { config } from "dotenv";
 config();
 
-import mysql from "mysql2/promise"; // Import mysql2/promise for async/await support
+import mysql from "mysql2/promise";
 
 // MySQL database credentials
 const dbConfig = {
@@ -16,12 +16,12 @@ export async function executeQuery(query: string, values?: any[]): Promise<any> 
     const connection = await mysql.createConnection(dbConfig);
 
     try {
-        const [rows] = await connection.execute(query, values);
+        const [rows] = await connection.execute(query, values || []);
         return rows;
     } catch (err) {
         console.log(err);
     } finally {
-        connection.end(); // Close the connection in a finally block to ensure it always happens
+        connection.end();
     }
 }
 
@@ -32,7 +32,24 @@ export async function executeMultipleQueries(queries: Array<{ query: string, val
         const results = [];
 
         for (const { query, values } of queries) {
-            const [rows] = await connection.execute(query, values);
+            const [rows] = await connection.execute(query, values || []);
+            results.push(rows);
+        }
+
+        return results;
+    } finally {
+        connection.end();
+    }
+}
+
+export async function executeQueries(queries: Array<{ query: string, values?: any[] }>): Promise<any> {
+    const connection = await mysql.createConnection(dbConfig);
+
+    try {
+        const results = [];
+
+        for (const { query, values } of queries) {
+            const [rows] = await connection.execute(query, values || []);
             results.push(rows);
         }
 
