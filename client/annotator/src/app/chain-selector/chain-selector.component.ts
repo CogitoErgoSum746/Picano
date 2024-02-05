@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { API } from '../../config/API';
-import { Product } from '../app.services';
 
 type DataNode = {
     id: string;

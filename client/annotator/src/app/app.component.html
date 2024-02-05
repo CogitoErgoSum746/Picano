@@ -126,7 +126,12 @@
   </table>
 
   <!-- Submit product data -->
-  <div class="submit-button-container" *ngIf="products.length > 0">
+  <div class="submit-button-container" *ngIf="products.length > 0 && !confirm">
     <button (click)="handleSubmit()">Submit</button>
+  </div>
+
+  <div class="confirmation-container" *ngIf="confirm">
+    <span>Are you sure you want to submit? Check the table values before confirming.</span>
+    <button (click)="submitData()">Submit</button>
   </div>
 </ng-container>
