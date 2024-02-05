@@ -25,6 +25,9 @@ export class AppComponent {
     // check for undefined user to display login page.
     authenticated: Boolean = Boolean(localStorage.getItem("jwt"));
 
+    // To show confirmation message before submission.
+    confirm: Boolean = false;
+
     setAuthenticated(status: Boolean) {
         this.authenticated = status;
     }
@@ -153,9 +156,16 @@ export class AppComponent {
         this.products.splice(index, 1, newProduct);
     }
 
+    handleSubmit() {
+        // Confirmation for submission.
+        this.confirm = true;
+    }
+
     // Submit products along with chain data.
-    async handleSubmit() {
+    async submitData() {
         this.helperText = "Submitting...";
+        this.confirm = false;
+
         // Get chain data from dropdowns form.
         const dropDownForm = <HTMLFormElement>document.getElementById('dropdowns');
         const formData = new FormData(dropDownForm);
@@ -190,6 +200,13 @@ export class AppComponent {
         if (response.status === 400) {
             this.helperText = (await response.json()).message;
             return;
+        }
+
+        // Reset application on successful submission.
+        const success = (await response.json()).success || false;
+
+        if (success) {
+            location.reload()            
         }
     }
 
