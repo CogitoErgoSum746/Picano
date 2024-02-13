@@ -3,7 +3,7 @@ import { executeQuery, executeMultipleQueries, executeQueries } from '../db_conn
 
 const router: Router = Router();
 
-router.post('/finalCSV', async (req: Request, res: Response) => {
+router.post('/finalCSV2', async (req: Request, res: Response) => {
     try {
         const data = req.body;
 
