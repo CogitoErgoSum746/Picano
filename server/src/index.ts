@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 // WARN: Cors fix, remove in production.
 app.use(
     cors({
-    origin: ['http://158.220.90.117', 'http://localhost:4200'],
+    origin: ['http://161.97.78.88', 'http://localhost:4200'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     // credentials: true,
     optionsSuccessStatus: 204,
