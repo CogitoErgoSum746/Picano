@@ -107,6 +107,12 @@ export class ProductDetailsUpdator {
                 authtoken: jwt
             },
         });
+
+        if (response.status === 401) {
+            this.authorised.emit(false);
+            return;
+        }
+
         const data = await response.json();
 
         this.similarProducts = data;
