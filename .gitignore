@@ -2,3 +2,4 @@
 node_modules/
 pdfapi/
 venv/
+__pycache__/
