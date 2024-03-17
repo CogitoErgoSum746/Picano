@@ -148,6 +148,10 @@ export class AppComponent {
         this.helperText = '';
     }
 
+    // TODO extract product creation logic from above function.
+    // use this to create n products from replicateProduct.
+    createProduct() {}
+
     changeCurrentProduct(event: any) {
         this.helperText = '';
         this.currentProductId = event.target.value;
@@ -221,9 +225,7 @@ export class AppComponent {
         // Reset application on successful submission.
         const success = (await response.json()).success || false;
 
-        if (success) {
-            location.reload()            
-        }
+        if (success) location.reload();
     }
 
     // Sets campaign date to all products
@@ -243,9 +245,7 @@ export class AppComponent {
 
         // Set the date to all products with null dates.
         this.products.forEach(product => {
-            if (!product[key]) {
-                product[key] = value
-            }
+            if (!product[key]) product[key] = value;
         });
     }
 }
