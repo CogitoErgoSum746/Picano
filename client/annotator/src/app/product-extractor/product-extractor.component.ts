@@ -117,4 +117,15 @@ export class ProductDetailsUpdator {
 
         this.similarProducts = data;
     }
+
+    replicateProduct(event: Event) {
+        event.preventDefault();
+        const form = <HTMLFormElement>event.target;
+        const formData = new FormData(form);
+        const copies = Number(formData.get("copies"));
+
+        // generate new products with the same data 
+        // as the row selected for copies.
+        
+    }
 }
