@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { ImageCropperModule, ImageCroppedEvent } from 'ngx-image-cropper';
+import { ImageCropperModule, ImageCroppedEvent, CropperPosition, Dimensions } from 'ngx-image-cropper';
 import { ProductDetailsUpdator } from './product-extractor/product-extractor.component';
 import { Product } from './app.services';
 import { ChainSelectorComponent } from './chain-selector/chain-selector.component';
@@ -36,6 +36,7 @@ export class AppComponent {
     brochureURLs: string[] | undefined;
     currentBrochureIndex: number = 0;
 
+    cropper: CropperPosition = { x1: 10, y1: 10, x2: 100, y2: 100 };
     // current cropped image url.
     croppedImage: string | undefined;
 
@@ -93,6 +94,21 @@ export class AppComponent {
     setBrochures(urls: string[]) {
         this.brochureURLs = urls;
         this.helperText = "Add a product to get started."
+    }
+
+    // set initial cropper position.
+    cropperReady(image: Dimensions) {
+        const side = Math.min(image.width, image.height);
+
+        if (image.height < image.width) {
+            const x1 = (image.width - side) / 2;
+            const x2 = x1 + side;
+            this.cropper = { x1, y1: 0, x2, y2: side };
+        } else {
+            const y1 = (image.height - side) / 2;
+            const y2 = y1 + side;
+            this.cropper = { x1: 0, y1, x2: side, y2 };
+        }
     }
 
     // imageCropped updates the product image.
