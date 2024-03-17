@@ -45,10 +45,12 @@
       </select>
 
       <image-cropper
+        [cropper]="cropper"
         [imageURL]="brochureURLs[currentBrochureIndex]"
         [maintainAspectRatio]="false"
         format="png"
         (imageCropped)="imageCropped($event)"
+        (cropperReady)="cropperReady($event)"
       ></image-cropper>
     </div>
 
