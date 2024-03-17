@@ -31,44 +31,32 @@ router.post('/vision', upload.single('image'), async (req: Request, res: Respons
     }
 });
 
+// maps table fields to request keys.
+const TABLE_MAP: Record<string, string> = {
+    "brandName": "brand",
+    "campaignQty": "campaignQuantity",
+    "restrictions": "restrictions",
+    "productNameFI": "name",
+    "productCategory1": "category",
+    "productDesriptionFI": "description",
+    "discountedProductPrice": "discountedPrice",
+};
+
 // GET route to get similar historic products with provided field values.
 router.get("/similar-products", async (req: Request, res: Response) => {
-    const { 
-        name, brand, description, discountedPrice,
-        campaignQuantity, restrictions, category
-    } = req.query;
+    const params = req.query;
 
     // build the WHERE part of the query.
     // this is done manually to avoid SQL injection.
     const whereQueryStrings = [];
     const values = [];
-    if (name) {
-        whereQueryStrings.push("LOWER(productNameFI) LIKE ?");
-        values.push(`%${name.toString().toLowerCase()}%`);
-    }
-    if (brand) {
-        whereQueryStrings.push("LOWER(brandName) LIKE ?");
-        values.push(`%${brand.toString().toLowerCase()}%`);
-    }
-    if (category) {
-        whereQueryStrings.push("LOWER(productCategory1) LIKE ?");
-        values.push(`%${category.toString().toLowerCase()}%`);
-    }
-    if (description) {
-        whereQueryStrings.push("LOWER(productDesriptionFI) LIKE ?");
-        values.push(`%${description.toString().toLowerCase()}%`);
-    }
-    if (restrictions) {
-        whereQueryStrings.push("LOWER(restrictions) LIKE ?");
-        values.push(`%${restrictions.toString().toLowerCase()}%`);
-    }
-    if (discountedPrice) {
-        whereQueryStrings.push("LOWER(discountedProductPrice) LIKE ?");
-        values.push(`%${discountedPrice.toString().toLowerCase()}%`);
-    }
-    if (campaignQuantity) {
-        whereQueryStrings.push("LOWER(campaignQty) LIKE ?");
-        values.push(`%${campaignQuantity.toString().toLowerCase()}%`);
+    for (const [field, key] of Object.entries(TABLE_MAP)) {
+        const value = params[key];
+        if (value) {
+            const queryString = `LOWER(${field}) LIKE ?`;
+            whereQueryStrings.push(queryString);
+            values.push(`%${value.toString().toLowerCase()}%`);
+        }
     }
 
     // If no data is provided to query from, return.
@@ -82,8 +70,20 @@ FROM Final_products_csv
 WHERE ${whereQueryStrings.join(" AND ")};
     `;
 
-    const data = await executeQuery(query, values);
-    res.json(data);
+    const products = await executeQuery(query, values);
+
+    // convert fields back into their corresponding keys
+    // for all products in data
+    const response = products.map((p: any) => {
+        const product: Record<string, string> = {};
+
+        for (const [field, key] of Object.entries(TABLE_MAP)) 
+            product[key] = p[field];
+        
+        return product;
+    });
+
+    res.json(response);
 });
 
 export default router;
