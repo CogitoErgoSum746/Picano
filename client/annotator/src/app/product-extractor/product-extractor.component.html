@@ -7,6 +7,40 @@
     </div>
   </div>
 
+  <div class="similar-product-section">
+    <details>
+        <summary>Similar Products: {{ similarProducts.length }}</summary>
+        <table *ngIf="similarProducts.length > 0">
+            <!-- Header row. -->
+            <tr>
+            <!-- Render ID column at the beginning. -->
+            <th>Brand Name</th>
+            <th>Product Name</th>
+            <th>Description</th>
+            <th>Discounted Price</th>
+            <th>Campaign Quantity</th>
+            <th>Restrictions</th>
+            <th>Product Category</th>
+            <th>From Date</th>
+            <th>To Date</th>
+            </tr>
+
+            <!-- Data rows. -->
+            <tr *ngFor="let product of similarProducts">
+            <td>{{ product.brand }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.discountedPrice }}</td>
+            <td>{{ product.campaignQuantity }}</td>
+            <td>{{ product.restrictions }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.from }}</td>
+            <td>{{ product.to }}</td>
+            </tr>
+        </table>
+    </details>
+  </div>
+
   <!-- Button for each attribute to get OCR text. -->
   <div class="product-attribute-container">
       <!-- Product attributes are manually rendered

@@ -23,6 +23,7 @@ export class ProductDetailsUpdator {
 
     // Populate predefined product categories.
     categories: string[] = [];
+    similarProducts: Product[] = [];
 
     // Fetch and populate categories.
     async ngOnInit() {
@@ -87,6 +88,27 @@ export class ProductDetailsUpdator {
     updateProductAttribute(attribute: string, value: any) {
         this.product[attribute as keyof Product] = value;
         this.updateProduct.emit(this.product);
+
+        this.fetchSimilarProducts();
     }
 
+    // fetches similar products with current products details.
+    async fetchSimilarProducts() {
+        const jwt = localStorage.getItem("jwt");
+
+        if (!jwt) {
+            this.authorised.emit(false);
+            return;
+        }
+
+        const response = await fetch(API.similarProducts(this.product), {
+            method: 'GET',
+            headers: {
+                authtoken: jwt
+            },
+        });
+        const data = await response.json();
+
+        this.similarProducts = data;
+    }
 }

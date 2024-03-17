@@ -3,59 +3,72 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 20px; /* Add some padding for better spacing */
-  }
-  
-  .section-title {
+    padding: 20px;
+    row-gap: 10px;
+}
+
+.section-title {
     font-size: 1.5rem;
     font-weight: 500;
     margin-bottom: 10px;
-  }
-  
-  .preview-section {
+}
+
+.preview-section {
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-  
-  .cropped-image-container {
+}
+
+.similar-product-section {
+    background-color: azure;
+    max-height: 200px;
+    padding: 10px;
+    text-align: center;
+}
+
+.cropped-image-container {
     display: flex;
     justify-content: center;
     width: 40vw;
     height: 20vh;
-    overflow: hidden; /* Hide overflowing content */
-    border: 1px solid #ddd; /* Add a border for better visibility */
+    overflow: hidden;
+    /* Hide overflowing content */
+    border: 1px solid #ddd;
+    /* Add a border for better visibility */
     border-radius: 4px;
-    margin-bottom: 20px; /* Add some margin for better separation */
-  }
-  
-  .product-attribute-container {
+    margin-bottom: 20px;
+    /* Add some margin for better separation */
+}
+
+.product-attribute-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
-  }
-  
-  .product-attribute {
+}
+
+.product-attribute {
     display: grid;
     grid-template-columns: 1.2fr 0.5fr 2fr;
     grid-auto-rows: 30px;
-    align-items: center; /* Align items vertically in the center */
-    gap: 10px; /* Add some gap between elements */
-  }
-  
-  .attribute-label {
+    align-items: center;
+    /* Align items vertically in the center */
+    gap: 10px;
+    /* Add some gap between elements */
+}
+
+.attribute-label {
     font-weight: bold;
-  }
-  
-  .attribute-input {
+}
+
+.attribute-input {
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
-  }
-  
-  button {
+}
+
+button {
     padding: 8px 12px;
     background-color: #4CAF50;
     color: white;
@@ -63,9 +76,8 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
-  }
-  
-  button:hover {
+}
+
+button:hover {
     background-color: #45a049;
-  }
-  
+}
