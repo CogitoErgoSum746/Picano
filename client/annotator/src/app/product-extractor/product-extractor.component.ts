@@ -128,8 +128,6 @@ export class ProductDetailsUpdator {
         const n = formData.get("copies");
         const copies = parseInt(n?.toString()!);
 
-            
-
         // generate new products with the same data 
         // as the row selected for copies.
         this.createProducts.emit({ product, copies })
