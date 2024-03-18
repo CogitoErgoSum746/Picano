@@ -38,8 +38,10 @@ const TABLE_MAP: Record<string, string> = {
     "restrictions": "restrictions",
     "productNameFI": "name",
     "productCategory1": "category",
-    "productDesriptionFI": "description",
+    "productDescriptionFI": "description",
     "discountedProductPrice": "discountedPrice",
+    "campaignStartDate": "from",
+    "campaignEndDate": "to",
 };
 
 // GET route to get similar historic products with provided field values.
@@ -51,6 +53,9 @@ router.get("/similar-products", async (req: Request, res: Response) => {
     const whereQueryStrings = [];
     const values = [];
     for (const [field, key] of Object.entries(TABLE_MAP)) {
+        // Ignore from and to values while filtering data.
+        if (key === 'from' || key === 'to') continue;
+
         const value = params[key];
         if (value) {
             const queryString = `LOWER(${field}) LIKE ?`;
@@ -64,8 +69,9 @@ router.get("/similar-products", async (req: Request, res: Response) => {
         return res.sendStatus(400);
 
     const query = `
-SELECT productNameFI, brandName, productCategory1, productDescriptionFI, 
-       restrictions, discountedProductPrice, campaignQty
+SELECT productNameFI, brandName, productCategory1, 
+       productDescriptionFI, restrictions, discountedProductPrice, 
+       campaignQty, campaignStartDate, campaignEndDate
 FROM Final_products_csv
 WHERE ${whereQueryStrings.join(" AND ")};
     `;
@@ -80,8 +86,16 @@ WHERE ${whereQueryStrings.join(" AND ")};
         for (const [field, key] of Object.entries(TABLE_MAP)) 
             product[key] = p[field];
         
+        // Extract only the date part of TimeStamp.
+        // Ideally, the field itself should be Date instead of TimeStamp.
+        if (product.from)
+            product.from = new Date(product.from).toISOString().substring(0, 10);
+        if (product.to)
+            product.to = new Date(product.to).toISOString().substring(0, 10);
+
         return product;
     });
+
 
     res.json(response);
 });

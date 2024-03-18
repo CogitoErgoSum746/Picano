@@ -29,7 +29,7 @@
             <!-- Data rows. -->
             <tr *ngFor="let product of similarProducts">
             <td>
-                <form class="replicate-container" (submit)="replicateProduct($event)">
+                <form class="replicate-container" (submit)="replicateProduct($event, product)">
                     <input size="3" min="1" type="number" name="copies" />
                     <button type="submit">Confirm</button>
                 </form>

@@ -148,9 +148,37 @@ export class AppComponent {
         this.helperText = '';
     }
 
-    // TODO extract product creation logic from above function.
-    // use this to create n products from replicateProduct.
-    createProduct() {}
+    // Creates new products with provided product details.
+    createProducts({ product, copies }: { product: Product, copies: number }) {
+        for ( let i = 1; i <= copies; i++ ) {
+            if (i === 1) {
+                // Set current product details as product
+                const index = this.products.findIndex(p => this.currentProductId === p.id);
+                this.products.splice(index, 1, {...product, id: this.currentProductId! });
+                continue;
+            }
+
+            const id = this.generateProductId();
+            const newProduct = new Product(
+                id, product.name, product.brand, product.description,
+                product.discountedPrice, product.campaignQuantity, 
+                product.restrictions, product.category, product.from,
+                product.to
+            );
+            this.products.push(newProduct);
+        }
+    }
+
+    // Returns a valid new product id.
+    generateProductId() {
+        const random = Math.floor(Math.random() * 100);
+        let id = random.toString();
+
+        if (this.products.some(product => product.id === id))
+            id = this.generateProductId();
+
+        return id;
+    }
 
     changeCurrentProduct(event: any) {
         this.helperText = '';
@@ -230,7 +258,7 @@ export class AppComponent {
 
     // Sets campaign date to all products
     // if product level date is not set.
-    setDefaultDate(date: {from?: Date, to?: Date}) {
+    setDefaultDate(date: { from?: Date, to?: Date }) {
         let key: keyof typeof date;
         let value: Date;
 

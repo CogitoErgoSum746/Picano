@@ -18,6 +18,9 @@ export class ProductDetailsUpdator {
     // to update products array.
     @Output() updateProduct: EventEmitter<Product> = new EventEmitter();
 
+    // Create n new products of product details.
+    @Output() createProducts: EventEmitter<{ product: Product, copies: number }> = new EventEmitter();
+
     // Communicate Unauthorised state to parent.
     @Output() authorised: EventEmitter<Boolean> = new EventEmitter();
 
@@ -118,14 +121,18 @@ export class ProductDetailsUpdator {
         this.similarProducts = data;
     }
 
-    replicateProduct(event: Event) {
+    replicateProduct(event: Event, product: Product) {
         event.preventDefault();
         const form = <HTMLFormElement>event.target;
         const formData = new FormData(form);
-        const copies = Number(formData.get("copies"));
+        const n = formData.get("copies");
+        const copies = parseInt(n?.toString()!);
+
+            
 
         // generate new products with the same data 
         // as the row selected for copies.
-        
+        this.createProducts.emit({ product, copies })
+        form.reset();
     }
 }
