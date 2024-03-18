@@ -62,6 +62,7 @@
         [product]="getCurrentProduct()"
         [imageUrl]="croppedImage"
         (updateProduct)="setProductDetails($event)"
+        (createProducts)="createProducts($event)"
         (authorised)="setAuthenticated($event)"
       ></app-product-extractor>
     </div>
