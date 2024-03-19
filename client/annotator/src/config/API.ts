@@ -10,6 +10,7 @@ export const API = {
     login: `${baseURL}/auth/login`,
     vision: `${baseURL}/vision`,
     submit: `${baseURL}/finalCSV`,
+    submitToDb: `${baseURL}/finalCSV2`,
     pdfToImages: `${baseURL}/pdf-to-images`,
     productCategories: `${baseURL}/product_category`,
 
