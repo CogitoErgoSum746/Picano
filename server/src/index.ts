@@ -7,6 +7,7 @@ import api from "./routes/utilAPIs";
 import db1 from "./routes/fetch_haukka";  
 import auth from "./routes/auth";
 import save_csv from "./routes/save_csv";
+import saveCsvDb from "./routes/mysql_csv";
 import { handle404, handle500 } from "./controllers/errorController";
 
 import { verifyUser } from "./middlewares/verifyLogin";
@@ -32,6 +33,7 @@ app.use("/auth", auth);
 app.use(verifyUser, api);
 app.use(verifyUser, db1);
 app.use(verifyUser, save_csv);
+app.use(verifyUser, saveCsvDb);
 
 
 app.use(handle404); 

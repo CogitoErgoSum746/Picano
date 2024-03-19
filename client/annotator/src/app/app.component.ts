@@ -250,6 +250,27 @@ export class AppComponent {
             return;
         }
 
+        // Save data to database. Ideally only this should be done instead of
+        // calling the above API.
+        const response2 = await fetch(API.submitToDb, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                authtoken: jwt
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (response2.status === 401) {
+            this.authenticated = false;
+            return
+        }
+
+        if (response.status === 400) {
+            this.helperText = (await response.json()).message;
+            return;
+        }
+
         // Reset application on successful submission.
         const success = (await response.json()).success || false;
 
