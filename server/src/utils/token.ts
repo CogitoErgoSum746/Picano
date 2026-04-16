@@ -11,8 +11,11 @@ export function signToken ( username: string): string {
     };
 
     try {
-        const token = jwt.sign(data, process.env.JWT_SECRET || 'mysecret', {
-            expiresIn: process.env.JWT_EXPIRES_IN || '4h',
+        const secret = process.env.JWT_SECRET || 'mysecret';
+        const expiresIn = (process.env.JWT_EXPIRES_IN || '4h') as jwt.SignOptions['expiresIn'];
+
+        const token = jwt.sign(data, secret, {
+            expiresIn,
         });
 
         return token;

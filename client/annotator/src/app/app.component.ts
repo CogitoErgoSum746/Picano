@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-import { ImageCropperModule, ImageCroppedEvent, CropperPosition, Dimensions } from 'ngx-image-cropper';
+import { ImageCropperComponent, ImageCroppedEvent, CropperPosition, Dimensions } from 'ngx-image-cropper';
 import { ProductDetailsUpdator } from './product-extractor/product-extractor.component';
 import { Product } from './app.services';
 import { ChainSelectorComponent } from './chain-selector/chain-selector.component';
@@ -12,7 +11,7 @@ import { LoginComponent } from './login/login.component';
   selector: 'app-root',
   standalone: true,
   imports: [
-    CommonModule, RouterOutlet, ImageCropperModule, 
+    CommonModule, ImageCropperComponent,
     ProductDetailsUpdator, ChainSelectorComponent, LoginComponent
   ],
   templateUrl: './app.component.html',
