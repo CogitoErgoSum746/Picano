@@ -29,7 +29,12 @@ router.post('/finalCSV', async (req: Request, res: Response) => {
         const name2 = 'Campaigns';
 
         const fileName = `${year}-${month}-${day}${current_time_}${name1}${name2}.csv`;
-        const filePath = '/home/csv_account/_Campaigns_/' + fileName;
+        const exportDir = process.env.CSV_EXPORT_DIR
+            ? path.resolve(process.env.CSV_EXPORT_DIR)
+            : path.resolve(process.cwd(), 'exports');
+        const filePath = path.join(exportDir, fileName);
+
+        fs.mkdirSync(exportDir, { recursive: true });
 
 
         async function getCampaignData(campaignData: any) { //: Promise<number[]>

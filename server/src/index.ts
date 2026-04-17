@@ -15,6 +15,10 @@ import { verifyUser } from "./middlewares/verifyLogin";
 // Instantiate express application.
 const app = express();
 const PORT = process.env.PORT || '8000';
+const corsOrigins = (process.env.CORS_ORIGINS || 'http://localhost:4200')
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -22,7 +26,7 @@ app.use(express.urlencoded({ extended: false }));
 // WARN: Cors fix, remove in production.
 app.use(
     cors({
-    origin: ['http://161.97.78.88', 'http://localhost:4200'],
+    origin: corsOrigins,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     // credentials: true,
     optionsSuccessStatus: 204,

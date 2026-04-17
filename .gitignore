@@ -1,5 +1,11 @@
 .env
+.env.*
+!server/.env.example
 node_modules/
+server/dist/
+client/annotator/dist/
 pdfapi/
 venv/
 __pycache__/
+exports/
+server/haukka-gvision.json

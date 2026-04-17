@@ -1,6 +1,7 @@
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+import os
 import fitz
 from io import BytesIO
 from PIL import Image
@@ -10,7 +11,9 @@ app = FastAPI()
 
 # Configure CORS settings
 origins = [
-    'http://161.97.78.88', 'http://localhost:4200'
+    origin.strip()
+    for origin in os.getenv("CORS_ORIGINS", "http://localhost:4200").split(",")
+    if origin.strip()
 ]
 
 app.add_middleware(
@@ -53,4 +56,4 @@ async def convert_pdf_to_png_route(pdf: UploadFile = File(...), zoom: int = 2):
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="127.0.0.1", port=8002)
+    uvicorn.run(app, host="127.0.0.1", port=int(os.getenv("PORT", "8002")))
